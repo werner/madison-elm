@@ -1,3 +1,7 @@
 module Components.Warehouses.Messages exposing (..)
 
-type Msg = NoOp
+import Http
+import Components.Warehouses.Models exposing (WarehouseId, Warehouse)
+
+type Msg = 
+    OnFetchAll (Result Http.Error (List Warehouse))
