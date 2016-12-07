@@ -1,0 +1,41 @@
+module Components.Warehouses.Edit exposing (..)
+
+import Html exposing (..)
+import Html.Attributes exposing (class, value, href)
+import Components.Warehouses.Messages exposing (..)
+import Components.Warehouses.Models exposing (..)
+
+view : Warehouse -> Html Msg
+view model = 
+    div []
+        [ nav model
+        , form model ]
+
+nav : Warehouse -> Html Msg
+nav model =
+    div [ class "clearfix mb2 white bg-black p1"]
+        []
+
+form : Warehouse -> Html Msg
+form warehouse = 
+    div [ class "m3" ]
+        [ h1 [] [ text warehouse.name ]
+        , formLevel warehouse ]
+
+formLevel : Warehouse -> Html Msg
+formLevel warehouse =
+    div
+        [ class "clearfix py1"
+        ]
+        [ div [ class "col col-5" ] [ text "Level" ]
+        , div [ class "col col-7" ]
+            [ span [ class "h2 bold" ] [ text (toString warehouse.stock) ]
+            , btnSave warehouse
+            ]
+        ]
+
+
+btnSave : Warehouse -> Html Msg
+btnSave warehouse =
+    a [ class "btn ml1 h1" ]
+        [ i [ class "fa fa-plus-circle" ] [ text "Save" ] ]
