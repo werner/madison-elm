@@ -14,8 +14,8 @@ loggedInUser = 0
 new : Warehouse
 new = 
     {
-        id     = "0"
-    ,   name   = ""
-    ,   userId = loggedInUser
-    ,   stock  = 0
+      id     = "0"
+    , name   = ""
+    , userId = loggedInUser
+    , stock  = 0
     }

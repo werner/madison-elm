@@ -38,7 +38,7 @@ formLevel warehouse =
 
 btnSave : Warehouse -> Html Msg
 btnSave warehouse =
-    a [ class "btn ml1 h1" ]
+    a [ class "btn ml1 h1", onClick (ChangeWarehouse warehouse.id "Test") ]
         [ i [ class "fa fa-plus-circle" ] [ text "Save" ] ]
 
 listBtn : Html Msg

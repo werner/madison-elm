@@ -2,6 +2,7 @@ module Components.Warehouses.Commands exposing (..)
 
 import Http
 import Json.Decode as Decode exposing (field)
+import Json.Encode as Encode
 import Components.Warehouses.Models exposing (WarehouseId, Warehouse)
 import Components.Warehouses.Messages exposing (..)
 
@@ -13,6 +14,9 @@ fetchAll =
 fetchAllUrl : String
 fetchAllUrl = "http://localhost:9090/warehouses"
 
+saveUrl : String -> String
+saveUrl warehouseId = "http://localhost:9090/warehouses/" ++ warehouseId
+
 collectionDecoder : Decode.Decoder (List Warehouse)
 collectionDecoder = Decode.list memberDecoder
 
@@ -23,3 +27,32 @@ memberDecoder =
         (field "name"   Decode.string)
         (field "userId" Decode.int)
         (field "stock"  Decode.float)
+
+saveRequest : Warehouse -> Http.Request Warehouse
+saveRequest warehouse = 
+    Http.request
+        { body = memberEncoded warehouse |> Http.jsonBody
+        , expect = Http.expectJson memberDecoder
+        , headers = []
+        , method = "PUT"
+        , timeout = Nothing
+        , url = saveUrl warehouse.id
+        , withCredentials = False
+        }
+
+save : Warehouse -> Cmd Msg
+save warehouse =
+    saveRequest warehouse
+        |> Http.send OnSave
+
+memberEncoded : Warehouse -> Encode.Value
+memberEncoded warehouse =
+    let
+        list =
+            [ ( "id",     Encode.string warehouse.id ) 
+            , ( "name",   Encode.string warehouse.name )
+            , ( "userId", Encode.int warehouse.userId )
+            , ( "stock",  Encode.float warehouse.stock )]
+    in
+        list
+            |> Encode.object
