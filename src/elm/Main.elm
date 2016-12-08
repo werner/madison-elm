@@ -1,16 +1,15 @@
 module Main exposing (..)
 
-import Messages exposing (Msg(..))
-import Models   exposing (Model, initialModel)
-import Update   exposing (update)
-import View     exposing (view)
+import Messages   exposing (Msg(..))
+import Models     exposing (Model, initialModel)
+import Update     exposing (update)
+import View       exposing (view)
 import Navigation exposing (Location)
 import Components.Warehouses.Commands exposing (fetchAll)
 import Routing exposing (Route)
 
 import Update exposing (update)
 import View exposing (view)
-
 
 init : Location -> ( Model, Cmd Msg )
 init location =

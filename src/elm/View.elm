@@ -3,6 +3,8 @@ module View exposing (..)
 import Html     exposing (Html, div, text)
 import Messages exposing (Msg(..))
 import Models   exposing (Model)
+import Components.Login.Form
+
 import Components.Warehouses.Edit
 import Components.Warehouses.List
 import Components.Warehouses.Models exposing (WarehouseId)
@@ -16,6 +18,9 @@ view model =
 page : Model -> Html Msg
 page model = 
     case model.route of
+        LoginRoute ->
+            Html.map LoginMsg (Components.Login.Form.view model.user) 
+
         WarehousesRoute ->
             Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses) 
 
