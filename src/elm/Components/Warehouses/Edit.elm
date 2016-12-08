@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (class, value, href)
 import Components.Warehouses.Messages exposing (..)
 import Components.Warehouses.Models exposing (..)
+import Html.Events exposing (onClick)
 
 view : Warehouse -> Html Msg
 view model = 
@@ -14,7 +15,7 @@ view model =
 nav : Warehouse -> Html Msg
 nav model =
     div [ class "clearfix mb2 white bg-black p1"]
-        []
+        [ listBtn ]
 
 form : Warehouse -> Html Msg
 form warehouse = 
@@ -39,3 +40,10 @@ btnSave : Warehouse -> Html Msg
 btnSave warehouse =
     a [ class "btn ml1 h1" ]
         [ i [ class "fa fa-plus-circle" ] [ text "Save" ] ]
+
+listBtn : Html Msg
+listBtn = 
+    button
+        [ class "btn regular" 
+        , onClick ShowWarehouses ]
+        [ i [ class "fa fa-chevron-left mr1" ] [], text "List" ]

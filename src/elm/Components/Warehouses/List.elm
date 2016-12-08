@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (class)
 import Components.Warehouses.Messages exposing (..)
 import Components.Warehouses.Models exposing (Warehouse)
+import Html.Events exposing (onClick)
 
 view : List Warehouse -> Html Msg
 view warehouses = 
@@ -38,7 +39,13 @@ warehouseRow warehouse =
        [ td [] [ text warehouse.id ]
        , td [] [ text warehouse.name] 
        , td [] [ text (toString warehouse.stock) ]
-       , td [] []
+       , td [] [ editBtn warehouse ]
        ]
 
-
+editBtn : Warehouse -> Html Msg
+editBtn warehouse =
+    button
+        [ class "btn regular" 
+        , onClick (ShowWarehouse warehouse.id)
+        ]
+        [ i [ class "fa fa-pencil mr1"] [], text "Edit" ]

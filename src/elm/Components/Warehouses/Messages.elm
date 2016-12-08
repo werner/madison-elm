@@ -1,7 +1,8 @@
 module Components.Warehouses.Messages exposing (..)
 
 import Http
-import Components.Warehouses.Models exposing (WarehouseId, Warehouse)
+import Components.Warehouses.Models exposing ( WarehouseId, Warehouse )
 
-type Msg = 
-    OnFetchAll (Result Http.Error (List Warehouse))
+type Msg = OnFetchAll (Result Http.Error (List Warehouse))
+         | ShowWarehouses
+         | ShowWarehouse WarehouseId
