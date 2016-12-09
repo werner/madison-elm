@@ -36,7 +36,6 @@
     "webpack-merge": "^0.16.0"
   },
   "dependencies": {
-    "ace-css": "^1.1.0",
     "font-awesome": "^4.7.0"
   }
 }
