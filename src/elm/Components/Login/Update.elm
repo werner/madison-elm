@@ -2,12 +2,13 @@ module Components.Login.Update exposing (..)
 
 import Components.Login.Messages exposing (Msg(..))
 import Components.Login.Models exposing (..)
+import Components.Login.Commands exposing (..)
 
 update : Msg -> User -> ( User, Cmd Msg )
 update message user = 
     case message of
         GoToLogin email password ->
-            ( User email password password, Cmd.none )
+            (user, logIn (User email password password))
 
         Email email ->
             ( { user | email = email }, Cmd.none )
@@ -17,3 +18,9 @@ update message user =
 
         PasswordConfirmation passwordConfirmation ->
             ( { user | passwordConfirmation = passwordConfirmation }, Cmd.none )
+
+        OnLogIn (Ok user) ->
+            ( user, Cmd.none )
+
+        OnLogIn (Err error) ->
+            ( user, Cmd.none )

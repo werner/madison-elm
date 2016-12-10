@@ -5,7 +5,6 @@ import Models     exposing (Model, initialModel)
 import Update     exposing (update)
 import View       exposing (view)
 import Navigation exposing (Location)
-import Components.Warehouses.Commands exposing (fetchAll)
 import Routing exposing (Route)
 
 import Update exposing (update)
@@ -16,7 +15,7 @@ init location =
     let currentRoute = 
         Routing.parseLocation location
     in
-        ( initialModel currentRoute, Cmd.map WarehousesMsg fetchAll )
+        ( initialModel currentRoute, Cmd.none )
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
