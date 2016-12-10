@@ -36,6 +36,7 @@
     "webpack-merge": "^0.16.0"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "materialize-css": "^0.97.8"
   }
 }
