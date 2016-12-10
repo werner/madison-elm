@@ -3,7 +3,6 @@ module Models exposing (..)
 import Components.Warehouses.Models exposing (Warehouse)
 import Components.Login.Models exposing (User)
 import Routing
-import Material
 
 type alias Model =
     { warehouses : List Warehouse
@@ -12,5 +11,5 @@ type alias Model =
 
 initialModel : Routing.Route -> Model
 initialModel route = { warehouses = []
-                     , user = User Material.model "" "" ""
+                     , user = User "" "" ""
                      , route = route }
