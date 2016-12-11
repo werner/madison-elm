@@ -11,5 +11,5 @@ type alias Model =
 
 initialModel : Routing.Route -> Model
 initialModel route = { warehouses = []
-                     , user = User "" ""
+                     , user = User "" "" Nothing Nothing
                      , route = route }

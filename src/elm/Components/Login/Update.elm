@@ -8,7 +8,7 @@ update : Msg -> User -> ( User, Cmd Msg )
 update message user = 
     case message of
         GoToLogin email password ->
-            (user, logIn (User email password))
+            (user, logIn (User email password Nothing Nothing))
 
         Email email ->
             ( { user | email = email }, Cmd.none )
