@@ -14,7 +14,7 @@ update msg model =
                 ( updateLogin, cmd ) =
                     Components.Login.Update.update subMsg model.user
             in
-                ( { model | user = updateLogin }, Cmd.none )
+                ( { model | user = updateLogin }, Cmd.map LoginMsg cmd )
 
         WarehousesMsg subMsg ->
             let

@@ -8,16 +8,13 @@ update : Msg -> User -> ( User, Cmd Msg )
 update message user = 
     case message of
         GoToLogin email password ->
-            (user, logIn (User email password password))
+            (user, logIn (User email password))
 
         Email email ->
             ( { user | email = email }, Cmd.none )
 
         Password password ->
             ( { user | password = password }, Cmd.none )
-
-        PasswordConfirmation passwordConfirmation ->
-            ( { user | passwordConfirmation = passwordConfirmation }, Cmd.none )
 
         OnLogIn (Ok user) ->
             ( user, Cmd.none )

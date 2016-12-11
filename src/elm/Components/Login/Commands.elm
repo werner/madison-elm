@@ -12,19 +12,17 @@ logIn user =
         |> Http.send OnLogIn
 
 logInUrl : String
-logInUrl = "http://localhost:9000/login"
+logInUrl = "http://localhost:9090/login"
 
 userDecoder : Decode.Decoder User
 userDecoder = 
-    Decode.map3 User
+    Decode.map2 User
         (field "email"    Decode.string)
         (field "password" Decode.string)
-        (field "passwordConfirmation" Decode.string)
 
 encodedRequest : User -> Encode.Value
 encodedRequest user =
             Encode.object
                 [ ( "email", Encode.string user.email )
                 , ( "password", Encode.string user.password )
-                , ( "passwordConfirmation", Encode.string user.passwordConfirmation )
                 ]
