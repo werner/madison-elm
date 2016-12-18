@@ -16,17 +16,13 @@ logInUrl = "http://localhost:9090/login"
 
 userDecoder : Decode.Decoder User
 userDecoder = 
-    Decode.map4 User
-        (field "email"     Decode.string)
-        (field "password"  Decode.string)
-        (field "createdAt" (Decode.nullable Decode.string))
-        (field "updatedAt" (Decode.nullable Decode.string))
+    Decode.map2 User
+        (field "authEmail"     Decode.string)
+        (field "authPassword"  Decode.string)
 
 encodedRequest : User -> Encode.Value
 encodedRequest user =
             Encode.object
-                [ ( "email",     Encode.string user.email )
-                , ( "password",  Encode.string user.password )
-                , ( "createdAt", Encode.null)
-                , ( "updatedAt", Encode.null)
+                [ ( "authEmail",     Encode.string user.email )
+                , ( "authPassword",  Encode.string user.password )
                 ]
