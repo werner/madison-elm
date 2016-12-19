@@ -4,6 +4,7 @@ import Html     exposing (Html, div, text)
 import Messages exposing (Msg(..))
 import Models   exposing (Model)
 import Components.Login.Form
+import Components.Register.Form
 
 import Components.Warehouses.Edit
 import Components.Warehouses.List
@@ -20,6 +21,9 @@ page model =
     case model.route of
         LoginRoute ->
             Html.map LoginMsg (Components.Login.Form.view model.user) 
+
+        RegisterRoute ->
+            Html.map RegisterMsg (Components.Register.Form.view model.regUser) 
 
         WarehousesRoute ->
             Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses) 

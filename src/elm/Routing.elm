@@ -5,14 +5,16 @@ import Components.Warehouses.Models exposing (WarehouseId)
 import UrlParser exposing (..)
 
 type Route = LoginRoute
+           | RegisterRoute
            | WarehousesRoute
            | WarehouseRoute WarehouseId
            | NotFoundRoute
 
 matchers : Parser (Route -> a) a
 matchers = oneOf
-         [ map LoginRoute (s "login")
-         , map WarehouseRoute (s "warehouses" </> string)
+         [ map LoginRoute      (s "login")
+         , map RegisterRoute   (s "register")
+         , map WarehouseRoute  (s "warehouses" </> string)
          , map WarehousesRoute (s "warehouses")
          ]
 
@@ -21,6 +23,5 @@ parseLocation location =
     case (parseHash matchers location) of
         Just route ->
             route
-
         Nothing   ->
             NotFoundRoute

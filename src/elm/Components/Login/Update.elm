@@ -1,14 +1,20 @@
 module Components.Login.Update exposing (..)
 
+import Navigation
+
 import Components.Login.Messages exposing (Msg(..))
 import Components.Login.Models exposing (..)
 import Components.Login.Commands exposing (..)
+
 
 update : Msg -> User -> ( User, Cmd Msg )
 update message user = 
     case message of
         GoToLogin email password ->
             (user, logIn (User email password))
+
+        GoToRegister ->
+            (user, Navigation.newUrl "#register" )
 
         Email email ->
             ( { user | email = email }, Cmd.none )

@@ -1,19 +1,19 @@
-module Components.Login.Form exposing (..)
+module Components.Register.Form exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, src, type_, id, for, href)
 import Html.Events exposing (onInput, onClick)
-import Components.Login.Messages exposing (..)
-import Components.Login.Models exposing (..)
+import Components.Register.Messages exposing (..)
+import Components.Register.Models exposing (..)
 
-view : User -> Html Msg
+view : RegUser -> Html Msg
 view user = 
     div [ class "container" ]
         [ div [ class "row" ]
                 [ div [ class "col s12 l3 offset-l4" ] 
                       [ div [ class "card-panel" ] 
                             [ div [ class "row center" ]
-                                  [ div [ class "col s12"] [ img  [ src "static/img/logo-small.png" ] [] ]
+                                  [ div [ class "col s12"] [ div  [] [ text "REGISTER" ] ]
                                   , div [ class "col s12"] [ div  [] [ text "MADISON ERP" ] ] ]
                             , div [ class "row" ]
                                   [ div [ class "input-field" ] 
@@ -34,12 +34,10 @@ view user =
                                   ]
                             , div [ class "row" ]
                                   [ button [ class "btn waves-effect waves-light col s12"
-                                           , onClick ( GoToLogin user.email user.password ) ] [ text "Login" ] ]
+                                           , onClick ( GoToRegister user ) ] [ text "Register" ] ]
                             , div [ class "row" ]
-                                  [ div [ class "col s5" ] [ a [ class "regular-link",
-                                                                 onClick GoToRegister ] [ text "Register Now!" ] ]
-                                  , div [ class "col s7 right-align" ] [ a [ class "regular-link", 
-                                                                             href "#" ] [ text "Forgot password?" ] ]
+                                  [ div [ class "col s5" ] [ a [ href "#" ] [ text "Register Now!" ] ]
+                                  , div [ class "col s7 right-align" ] [ a [ href "#" ] [ text "Forgot password?" ] ]
                                   ]
                             ] 
                       ] 

@@ -5,5 +5,6 @@ import Components.Login.Models exposing ( User )
 
 type Msg = GoToLogin String String
          | OnLogIn (Result Http.Error User)
+         | GoToRegister
          | Email String
          | Password String

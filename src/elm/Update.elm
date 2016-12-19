@@ -5,6 +5,7 @@ import Messages exposing (Msg(..))
 import Models   exposing (Model)
 import Components.Warehouses.Update
 import Components.Login.Update
+import Components.Register.Update
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
@@ -15,6 +16,13 @@ update msg model =
                     Components.Login.Update.update subMsg model.user
             in
                 ( { model | user = updateLogin }, Cmd.map LoginMsg cmd )
+
+        RegisterMsg subMsg ->
+            let
+                ( updateRegister, cmd ) =
+                    Components.Register.Update.update subMsg model.regUser
+            in
+                ( { model | regUser = updateRegister }, Cmd.map RegisterMsg cmd )
 
         WarehousesMsg subMsg ->
             let
