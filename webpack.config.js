@@ -65,7 +65,7 @@ if ( TARGET_ENV === 'development' ) {
     module: {
       loaders: [
         {
-          test: /src\/elm\/StyleSheets.elm$/,
+          test: /src\/elm\/Stylesheets.elm$/,
           loaders: [
             'style-loader',
             'css-loader',
@@ -75,7 +75,7 @@ if ( TARGET_ENV === 'development' ) {
         },
         {
           test:    /\.elm$/,
-          exclude: [/elm-stuff/, /node_modules/, /src\/elm\/StyleSheets.elm$/],
+          exclude: [/elm-stuff/, /node_modules/, /src\/elm\/Stylesheets.elm$/],
           loader:  'elm-hot!elm-webpack?verbose=true&warn=true&debug=true'
         },
         {
@@ -104,12 +104,12 @@ if ( TARGET_ENV === 'production' ) {
     module: {
       loaders: [
         {
-          test: /src\/elm\/StyleSheets.elm$/,
+          test: /src\/elm\/Stylesheets.elm$/,
           loader: 'elm-css-webpack-loader'
         },
         {
           test:    /\.elm$/,
-          exclude: [/elm-stuff/, /node_modules/, /src\/elm\/StyleSheets.elm$/],
+          exclude: [/elm-stuff/, /node_modules/, /src\/elm\/Stylesheets.elm$/],
           loader:  'elm-webpack'
         },
         {

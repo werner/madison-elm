@@ -3,6 +3,7 @@ require('materialize-css/dist/css/materialize.min.css');
 require('font-awesome/css/font-awesome.css');
 
 require( './styles/main.scss' );
+require( '../elm/Stylesheets' );
 var $ = jQuery = require( '../../node_modules/jquery/dist/jquery.js' );           // <--- remove if jQuery not needed
 require( '../../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js' );   // <--- remove if Bootstrap's JS not needed 
 require( 'materialize-css/dist/js/materialize.min.js' );
