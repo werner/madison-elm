@@ -25,7 +25,7 @@ var commonConfig = {
   },
 
   module: {
-    noParse: /\.elm$/,
+    noParse: /^(?!.*Stylesheets).*\.elm$/,
     loaders: [
       {
         test: /\.(eot|ttf|woff|woff2|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -65,8 +65,17 @@ if ( TARGET_ENV === 'development' ) {
     module: {
       loaders: [
         {
+          test: /src\/elm\/StyleSheets.elm$/,
+          loaders: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+            'elm-css-webpack-loader'
+          ]
+        },
+        {
           test:    /\.elm$/,
-          exclude: [/elm-stuff/, /node_modules/],
+          exclude: [/elm-stuff/, /node_modules/, /src\/elm\/StyleSheets.elm$/],
           loader:  'elm-hot!elm-webpack?verbose=true&warn=true&debug=true'
         },
         {
@@ -95,8 +104,12 @@ if ( TARGET_ENV === 'production' ) {
     module: {
       loaders: [
         {
+          test: /src\/elm\/StyleSheets.elm$/,
+          loader: 'elm-css-webpack-loader'
+        },
+        {
           test:    /\.elm$/,
-          exclude: [/elm-stuff/, /node_modules/],
+          exclude: [/elm-stuff/, /node_modules/, /src\/elm\/StyleSheets.elm$/],
           loader:  'elm-webpack'
         },
         {
