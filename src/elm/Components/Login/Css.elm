@@ -8,7 +8,7 @@ type CssClasses
 
 css : Stylesheet
 css =
-    (stylesheet << namespace "login")
+    (stylesheet << namespace "madison")
     [ (.) LoginIcon
         [ fontSize (em 2) |> important ]
     ]

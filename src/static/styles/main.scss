@@ -3,19 +3,3 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 // can add Boostrap overrides, additional Sass/CSS below...
-
-.input-field label.active {
-  font-size: 1em !important;
-}
-
-.input-field label {
-  font-size: 1.1em !important;
-}
-
-input {
-  font-size: 1.3em !important;
-}
-
-.regular-link {
-  cursor: pointer;
-}
