@@ -7,6 +7,7 @@ import Css.Namespace exposing (namespace)
 type CssClasses
     = RegularLink
     | InputField
+    | ErrorMessage
 
 css : Stylesheet
 css =
@@ -17,4 +18,6 @@ css =
         [ cursor pointer ]
     , (.) InputField
         [ children [ label [ fontSize (em 1.1) |> important ] ] ]
+    , (.) ErrorMessage
+        [ color (hex "F44336") ]
     ]

@@ -47,11 +47,10 @@ errorFor : FieldState e String -> Html msg
 errorFor field =
     case field.liveError of
         Just error ->
-            div [ Attr.class "error" ] [ text (toString error) ]
+            div [ class [ ErrorMessage ] ] [ text (toString error) ]
 
         Nothing ->
             text ""
-
 
 inputForm
     : (FieldState e String -> List a -> Html msg)
