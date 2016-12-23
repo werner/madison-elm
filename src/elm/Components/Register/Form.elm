@@ -4,6 +4,8 @@ import Html exposing (..)
 import Html.Attributes as Attr
 import Html.Events exposing (onInput, onClick)
 import Html.CssHelpers
+import Form exposing (Form, FieldState)
+import Form.Input as Input
 
 import MainCss exposing (..)
 import Components.Register.Messages exposing (..)
@@ -12,8 +14,11 @@ import Components.Register.Models exposing (..)
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : RegUser -> Html Msg
-view user = 
+view : RegFormModel -> Html Msg
+view model = Html.map FormMsg (form model)
+
+form : RegFormModel -> Html Form.Msg
+form ({ form, user } as model) = 
     div [ Attr.class "container" ]
         [ div [ Attr.class "row" ]
                 [ div [ Attr.class "col s12 l6 offset-l3" ] 
@@ -21,41 +26,42 @@ view user =
                             [ div [ Attr.class "row center valign-wrapper" ]
                                   [ div [ Attr.class "col s2"] [ img  [ Attr.src "static/img/logo-nav.png" ] [] ]
                                   , div [ Attr.class "col s10 left-align "] [ div  [] [ h2 [] [ text "Register" ] ] ] ]
-                            , div [ Attr.class "row" ]
-                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "text", onInput Email, Attr.class "validate" ] []
-                                        , label [] [ text "Email" ] ]
-                                  ]
-                            , div [ Attr.class "row" ]
-                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "password", onInput Password, Attr.class "validate" ] [] 
-                                        , label [] [ text "Password" ] ]
-                                  ]
-                            , div [ Attr.class "row" ]
-                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "password", 
-                                                  onInput PasswordConfirmation, Attr.class "validate" ] [] 
-                                        , label [] [ text "Password Confirmation" ] ]
-                                  ]
-                            , div [ Attr.class "row" ]
-                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "text", onInput FirstName, Attr.class "validate" ] []
-                                        , label [] [ text "First Name" ] ]
-                                  ]
-                            , div [ Attr.class "row" ]
-                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "text", onInput LastName, Attr.class "validate" ] []
-                                        , label [] [ text "Last Name" ] ]
-                                  ]
-                            , div [ Attr.class "row" ]
-                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "text", onInput CompanyName, Attr.class "validate" ] []
-                                        , label [] [ text "Company Name" ] ]
-                                  ]
+                            , div [ Attr.class "row" ] (inputForm Input.textInput "email" "Email" form)
+                            , div [ Attr.class "row" ] (inputForm Input.passwordInput "password" "Password" form)
+                            , div [ Attr.class "row" ] (inputForm Input.passwordInput 
+                                                                  "passwordConfirmation" 
+                                                                  "Password Confirmation" form)
+                            , div [ Attr.class "row" ] (inputForm Input.textInput "firstName" "First Name" form)
+                            , div [ Attr.class "row" ] (inputForm Input.textInput "lastName" "Last Name" form)
+                            , div [ Attr.class "row" ] (inputForm Input.textInput 
+                                                                  "companyName" "Company Name" form)
                             , div [ Attr.class "row" ]
                                   [ button [ Attr.class "btn waves-effect waves-light col s12"
-                                           , onClick ( GoToRegister user ) ] [ text "Register" ] ]
+                                           , onClick Form.Submit ] [ text "Register" ] ]
                             ] 
                       ] 
                 ]
         ]
+
+errorFor : FieldState e String -> Html msg
+errorFor field =
+    case field.liveError of
+        Just error ->
+            div [ Attr.class "error" ] [ text (toString error) ]
+
+        Nothing ->
+            text ""
+
+
+inputForm
+    : (FieldState e String -> List a -> Html msg)
+    -> String
+    -> String
+    -> Form e o
+    -> List (Html msg)
+inputForm typeField field labelField form =
+    [ div [ class [ InputField ], Attr.class "input-field" ] 
+          [ typeField (Form.getFieldAsString field form) []
+          , label [] [ text labelField ]
+          , errorFor (Form.getFieldAsString field form) ]
+    ]

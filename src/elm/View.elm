@@ -23,7 +23,7 @@ page model =
             Html.map LoginMsg (Components.Login.Form.view model.user) 
 
         RegisterRoute ->
-            Html.map RegisterMsg (Components.Register.Form.view model.regUser) 
+            Html.map RegisterMsg (Components.Register.Form.view model.regUser)
 
         WarehousesRoute ->
             Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses) 
