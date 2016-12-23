@@ -1,6 +1,5 @@
 module Messages exposing (..)
 
-import Form exposing (Form)
 import Navigation exposing (Location)
 import Components.Warehouses.Messages
 import Components.Login.Messages

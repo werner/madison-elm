@@ -9,9 +9,6 @@ import Components.Register.Commands exposing (..)
 update : Msg -> RegFormModel -> ( RegFormModel, Cmd Msg )
 update message ({ form, user } as model) = 
     case message of
-        GoToRegister user ->
-            ( model, register user )
-
         OnRegister (Ok user) ->
             ( model, Cmd.none )
 
@@ -19,4 +16,9 @@ update message ({ form, user } as model) =
             ( model, Cmd.none )
 
         FormMsg formMsg ->
-            ( { model | form = Form.update formMsg form }, Cmd.none )
+            case ( formMsg, Form.getOutput form ) of
+                ( Form.Submit, Just user ) ->
+                    ( model, register user )
+
+                _ ->
+                    ( { model | form = Form.update formMsg form }, Cmd.none )
