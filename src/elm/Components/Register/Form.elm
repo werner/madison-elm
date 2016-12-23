@@ -8,6 +8,7 @@ import Form exposing (Form, FieldState)
 import Form.Input as Input
 
 import MainCss exposing (..)
+import Translations.FormErrors exposing (translateError)
 import Components.Register.Messages exposing (..)
 import Components.Register.Models exposing (..)
 
@@ -47,7 +48,7 @@ errorFor : FieldState e String -> Html msg
 errorFor field =
     case field.liveError of
         Just error ->
-            div [ class [ ErrorMessage ] ] [ text (toString error) ]
+            div [ class [ ErrorMessage ] ] [ text (translateError error) ]
 
         Nothing ->
             text ""
