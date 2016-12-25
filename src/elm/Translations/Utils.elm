@@ -6,6 +6,7 @@ type alias TranslationSet =
 
 type TranslationId
     = ErrInvalidEmail
+    | ErrEmpty
 
 type Language 
     = English
@@ -18,6 +19,9 @@ translate lang trans =
       case trans of
         ErrInvalidEmail ->
           TranslationSet "Incorrect email format" "Formato de correo electrónico incorrecto"
+
+        ErrEmpty ->
+          TranslationSet "Can't be blank" "No puede quedar en blanco"
   in
     case lang of
       English ->

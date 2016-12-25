@@ -18,7 +18,9 @@ update message ({ form, user } as model) =
         FormMsg formMsg ->
             case ( formMsg, Form.getOutput form ) of
                 ( Form.Submit, Just user ) ->
-                    ( model, register user )
+                    case (user.password == user.passwordConfirmation) of
+                        True  -> ( model, register user )
+                        False -> ( model, Cmd.none )
 
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )

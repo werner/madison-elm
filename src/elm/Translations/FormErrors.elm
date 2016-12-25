@@ -10,5 +10,8 @@ translateError error =
         InvalidEmail ->
             translate English ErrInvalidEmail
 
-        _ ->
-            ""
+        Empty ->
+            translate English ErrEmpty
+
+        x ->
+            toString x

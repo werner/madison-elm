@@ -12,10 +12,10 @@ type alias RegUser =
     , companyName          : String }
 
 type alias RegFormModel =
-    { form : Form () RegUser
+    { form : Form String RegUser
     , user : RegUser }
 
-validate : Validation () RegUser
+validate : Validation String RegUser
 validate =
     map6 RegUser
         (field "email" email)
@@ -24,3 +24,16 @@ validate =
         (field "firstName" (string |> defaultValue ""))
         (field "lastName" (string |> defaultValue ""))
         (field "companyName" (string |> defaultValue ""))
+
+validatePassword : String -> Validation String String
+validatePassword password =
+    customValidation
+        string
+        (\confirmation ->
+            case (password == confirmation) of
+                True ->
+                    Ok "Passed"
+
+                False ->
+                   Err (customError "NoPassed")
+        )

@@ -44,15 +44,6 @@ form ({ form, user } as model) =
                 ]
         ]
 
-errorFor : FieldState e String -> Html msg
-errorFor field =
-    case field.liveError of
-        Just error ->
-            div [ class [ ErrorMessage ] ] [ text (translateError error) ]
-
-        Nothing ->
-            text ""
-
 inputForm
     : (FieldState e String -> List a -> Html msg)
     -> String
@@ -65,3 +56,12 @@ inputForm typeField field labelField form =
           , label [] [ text labelField ]
           , errorFor (Form.getFieldAsString field form) ]
     ]
+
+errorFor : FieldState e String -> Html msg
+errorFor field =
+    case field.liveError of
+        Just error ->
+            div [ class [ ErrorMessage ] ] [ text (translateError error) ]
+
+        Nothing ->
+            text ""
