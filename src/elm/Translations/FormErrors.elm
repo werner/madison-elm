@@ -13,8 +13,5 @@ translateError error =
         Empty ->
             translate English ErrEmpty
 
-        CustomError a ->
-            translate English PasswordNotMatch
-
         x ->
             toString x

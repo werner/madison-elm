@@ -1,5 +1,7 @@
 module Translations.Utils exposing (..)
 
+import List exposing (member)
+
 type alias TranslationSet =
     { english : String
     , spanish : String }
@@ -33,3 +35,8 @@ translate lang trans =
       Spanish ->
         .spanish translationSet
 
+uniqErrors : TranslationId -> List TranslationId -> List TranslationId
+uniqErrors error errors = 
+    case (member error errors) of
+        True  -> errors
+        False -> error :: errors

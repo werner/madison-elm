@@ -15,7 +15,7 @@ type alias RegUser =
 
 type alias RegFormModel =
     { form   : Form String RegUser
-    , errors : List (ErrorValue TranslationId)
+    , errors : List TranslationId
     , user   : RegUser }
 
 validate : Validation String RegUser

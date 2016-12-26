@@ -1,12 +1,12 @@
 module ViewHelpers exposing (inputForm, errorFor, showErrors)
 
 import Form exposing (Form, FieldState)
-import Form.Error exposing (ErrorValue(..))
 import Html exposing (..)
 import Html.Attributes as Attr
 import Html.CssHelpers
 
 import Translations.FormErrors exposing (translateError)
+import Translations.Utils exposing (TranslationId(..), Language(..), translate)
 import MainCss exposing (..)
 
 { id, class, classList } =
@@ -34,6 +34,6 @@ errorFor field =
         Nothing ->
             text ""
 
-showErrors : List (ErrorValue a) -> List (Html msg)
+showErrors : List TranslationId -> List (Html msg)
 showErrors errors =
-    List.map (\error -> div [ class [ ErrorMessage ] ] [ text (translateError error) ]) errors
+    List.map (\error -> div [ class [ ErrorMessage ] ] [ text (translate English error) ]) errors
