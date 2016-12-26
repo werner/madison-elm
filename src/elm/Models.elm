@@ -16,5 +16,5 @@ type alias Model =
 initialModel : Routing.Route -> Model
 initialModel route = { warehouses = []
                      , user = User "" ""
-                     , regUser = RegFormModel (Form.initial [] validate) (RegUser "" "" "" "" "" "")
+                     , regUser = RegFormModel (Form.initial [] validate) [] (RegUser "" "" "" "" "" "")
                      , route = route }

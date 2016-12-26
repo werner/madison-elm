@@ -1,6 +1,8 @@
 module Components.Register.Models exposing (..)
 
 import Form exposing (Form)
+import Form.Error exposing (ErrorValue(..))
+import Translations.Utils exposing (TranslationId(..))
 import Form.Validate as Validate exposing (..)
 
 type alias RegUser =
@@ -12,8 +14,9 @@ type alias RegUser =
     , companyName          : String }
 
 type alias RegFormModel =
-    { form : Form String RegUser
-    , user : RegUser }
+    { form   : Form String RegUser
+    , errors : List (ErrorValue TranslationId)
+    , user   : RegUser }
 
 validate : Validation String RegUser
 validate =
