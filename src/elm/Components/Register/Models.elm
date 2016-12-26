@@ -24,16 +24,3 @@ validate =
         (field "firstName" (string |> defaultValue ""))
         (field "lastName" (string |> defaultValue ""))
         (field "companyName" (string |> defaultValue ""))
-
-validatePassword : String -> Validation String String
-validatePassword password =
-    customValidation
-        string
-        (\confirmation ->
-            case (password == confirmation) of
-                True ->
-                    Ok "Passed"
-
-                False ->
-                   Err (customError "NoPassed")
-        )
