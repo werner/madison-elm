@@ -36,7 +36,7 @@ view user =
                                         , label [] [ text "Password" ] ]
                                   ]
                             , div [ Attr.class "row" ]
-                                  [ div [ Attr.class "input-field" ] 
+                                  [ div [ class [ InputField ], Attr.class "input-field" ] 
                                         [ input [ Attr.type_ "checkbox", Attr.id "remember-me" ] []
                                         , label [ Attr.for "remember-me" ] [ text "Remember me" ] ]
                                   ]
