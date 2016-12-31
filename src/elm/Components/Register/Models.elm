@@ -1,7 +1,6 @@
 module Components.Register.Models exposing (..)
 
 import Form exposing (Form)
-import Form.Error exposing (ErrorValue(..))
 import Translations.Utils exposing (TranslationId(..))
 import Form.Validate as Validate exposing (..)
 
@@ -14,16 +13,29 @@ type alias RegUser =
     , companyName          : String }
 
 type alias RegFormModel =
-    { form   : Form String RegUser
+    { form   : Form TranslationId RegUser
     , errors : List TranslationId
     , user   : RegUser }
 
-validate : Validation String RegUser
+validate : Validation TranslationId RegUser
 validate =
     map6 RegUser
         (field "email" email)
         (field "password" (string |> andThen nonEmpty))
-        (field "passwordConfirmation" (string |> andThen nonEmpty))
+        ((field "password" string) |> andThen validateConfirmation)
         (field "firstName" (string |> defaultValue ""))
         (field "lastName" (string |> defaultValue ""))
         (field "companyName" (string |> defaultValue ""))
+
+validateConfirmation : String -> Validation TranslationId String
+validateConfirmation password =
+    field "passwordConfirmation"
+        (string
+            |> andThen
+                (\confirmation ->
+                    if password == confirmation then
+                        succeed confirmation
+                    else
+                        fail (customError PasswordNotMatch)
+                )
+        )

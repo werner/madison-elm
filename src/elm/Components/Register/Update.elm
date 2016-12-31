@@ -1,7 +1,6 @@
 module Components.Register.Update exposing (..)
 
 import Form exposing (Form)
-import Translations.Utils exposing (TranslationId(..), uniqErrors)
 
 import Components.Register.Messages exposing (Msg(..))
 import Components.Register.Models exposing (..)
@@ -19,10 +18,7 @@ update message ({ form, errors, user } as model) =
         FormMsg formMsg ->
             case ( formMsg, Form.getOutput form ) of
                 ( Form.Submit, Just user ) ->
-                    let newModel = { model | errors = [] }
-                    in 
-                        case (user.password == user.passwordConfirmation) of
-                            True  -> ( newModel, register user )
-                            False -> ( { newModel | errors = uniqErrors PasswordNotMatch errors }, Cmd.none )
+                    ( model, register user )
+
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )
