@@ -14,9 +14,9 @@ logIn ({ user, referer } as model) =
 logInUrl : String
 logInUrl = "http://localhost:9090/login"
 
-userDecoder : Decode.Decoder User
+userDecoder : Decode.Decoder CurrentUser
 userDecoder = 
-    Decode.map2 User
+    Decode.map2 CurrentUser
         (field "suId"     Decode.string)
         (field "suEmail"  Decode.string)
 
