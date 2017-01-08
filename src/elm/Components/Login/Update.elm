@@ -3,27 +3,29 @@ module Components.Login.Update exposing (..)
 import Navigation
 
 import Components.Login.Messages exposing (Msg(..))
-import Components.Login.Models exposing (..)
+import Components.Login.Models   exposing (..)
 import Components.Login.Commands exposing (..)
 
-
-update : Msg -> User -> ( User, Cmd Msg )
-update message user = 
+update : Msg -> LoginModel -> ( LoginModel, Cmd Msg )
+update message ({ user, referer } as model) = 
     case message of
-        GoToLogin email password ->
-            (user, logIn (User email password))
+        GoToLogin email password referer ->
+            ( model, logIn (LoginModel (User email password) referer) )
 
         GoToRegister ->
-            (user, Navigation.newUrl "#register" )
+            ( model, Navigation.newUrl "#register" )
 
         Email email ->
-            ( { user | email = email }, Cmd.none )
+            ( { model | user = User email user.password }, Cmd.none )
 
         Password password ->
-            ( { user | password = password }, Cmd.none )
+            ( { model | user = User user.email password }, Cmd.none )
 
-        OnLogIn (Ok user) ->
-            ( user, Cmd.none )
+        OnLogIn referer user ->
+            ( model, reloadTo referer )
 
-        OnLogIn (Err error) ->
-            ( user, Cmd.none )
+reloadTo : String -> Cmd msg
+reloadTo referer = 
+    case referer of
+        "" -> Navigation.newUrl "#dashboard"
+        x  -> Navigation.newUrl x

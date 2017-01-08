@@ -6,10 +6,10 @@ import Json.Encode as Encode
 import Components.Login.Messages exposing (..)
 import Components.Login.Models exposing (..)
 
-logIn : User -> Cmd Msg
-logIn user =
+logIn : LoginModel -> Cmd Msg
+logIn ({ user, referer } as model) =
     Http.post logInUrl (Http.jsonBody (encodedRequest user)) userDecoder
-        |> Http.send OnLogIn
+        |> Http.send (OnLogIn referer)
 
 logInUrl : String
 logInUrl = "http://localhost:9090/login"
@@ -17,8 +17,8 @@ logInUrl = "http://localhost:9090/login"
 userDecoder : Decode.Decoder User
 userDecoder = 
     Decode.map2 User
-        (field "authEmail"     Decode.string)
-        (field "authPassword"  Decode.string)
+        (field "suId"     Decode.string)
+        (field "suEmail"  Decode.string)
 
 encodedRequest : User -> Encode.Value
 encodedRequest user =

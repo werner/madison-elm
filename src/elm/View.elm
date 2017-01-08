@@ -3,6 +3,7 @@ module View exposing (..)
 import Html     exposing (Html, div, text)
 import Messages exposing (Msg(..))
 import Models   exposing (Model)
+import Components.Login.Models exposing (LoginModel)
 import Components.Login.Form
 import Components.Register.Form
 
@@ -26,13 +27,18 @@ page model =
             Html.map RegisterMsg (Components.Register.Form.view model.regUser)
 
         WarehousesRoute ->
-            Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses) 
+            case authenticate of
+                True ->   Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses)
+                False ->  Html.map LoginMsg (Components.Login.Form.view (LoginModel model.user.user "#warehouses"))
 
         WarehouseRoute id -> 
             warehouseEditPage model id
 
         NotFoundRoute ->
             notFoundView
+
+authenticate : Bool
+authenticate = False
 
 warehouseEditPage : Model -> WarehouseId -> Html Msg
 warehouseEditPage model warehouseId = 

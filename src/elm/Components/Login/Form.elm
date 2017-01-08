@@ -14,8 +14,8 @@ import Components.Login.Css exposing (..)
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : User -> Html Msg
-view user = 
+view : LoginModel -> Html Msg
+view ({ user, referer } as model) = 
     div [ Attr.class "container" ]
         [ div [ Attr.class "row" ]
                 [ div [ Attr.class "col s12 l3 offset-l4" ] 
@@ -42,7 +42,7 @@ view user =
                                   ]
                             , div [ Attr.class "row" ]
                                   [ button [ Attr.class "btn waves-effect waves-light col s12"
-                                           , onClick ( GoToLogin user.email user.password ) ] [ text "Login" ] ]
+                                           , onClick ( GoToLogin user.email user.password referer ) ] [ text "Login" ] ]
                             , div [ Attr.class "row" ]
                                   [ div [ Attr.class "col s5" ] [ a [ class [ RegularLink ],
                                                                       onClick GoToRegister ] 
