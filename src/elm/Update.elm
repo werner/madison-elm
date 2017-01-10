@@ -41,5 +41,5 @@ update msg model =
 
         LoadLocalStorage object ->
             case decodeString (at ["currentUser", "id"] string) object of
-                Ok  obj  -> ( model, Cmd.none )
+                Ok  obj -> ( model, Cmd.none )
                 Err err -> ( model, Navigation.newUrl "#login" )
