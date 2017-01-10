@@ -28,8 +28,8 @@ page model =
 
         WarehousesRoute ->
             case authenticate of
-                True ->   Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses)
-                False ->  Html.map LoginMsg (Components.Login.Form.view (LoginModel model.user.user "#warehouses"))
+                True  -> Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses)
+                False -> Html.map LoginMsg (Components.Login.Form.view (LoginModel model.user.user "#warehouses"))
 
         WarehouseRoute id -> 
             warehouseEditPage model id
@@ -38,7 +38,7 @@ page model =
             notFoundView
 
 authenticate : Bool
-authenticate = False
+authenticate = True
 
 warehouseEditPage : Model -> WarehouseId -> Html Msg
 warehouseEditPage model warehouseId = 

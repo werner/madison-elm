@@ -6,6 +6,10 @@ import Components.Login.Messages exposing (Msg(..))
 import Components.Login.Models   exposing (..)
 import Components.Login.Commands exposing (..)
 
+import Json.Encode exposing (..)
+
+import Ports.LocalStorage exposing (..) 
+
 update : Msg -> LoginModel -> ( LoginModel, Cmd Msg )
 update message ({ user, referer } as model) = 
     case message of
@@ -21,8 +25,21 @@ update message ({ user, referer } as model) =
         Password password ->
             ( { model | user = User user.email password }, Cmd.none )
 
-        OnLogIn referer user ->
-            ( model, reloadTo referer )
+        OnLogIn referer (Ok user) ->
+            ( model, Cmd.batch [ reloadTo referer, 
+                                 saveStorage (
+                                              object 
+                                                 [ ("currentUser", 
+                                                      object [ ("id",    string user.id)
+                                                             , ("email", string user.email)
+                                                             ]
+                                                    )
+                                                 ]
+                                            ) 
+                               ] )
+
+        OnLogIn referer (Err user) ->
+            ( model, reloadTo "#login" )
 
 reloadTo : String -> Cmd msg
 reloadTo referer = 

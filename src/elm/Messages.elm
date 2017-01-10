@@ -1,5 +1,7 @@
 module Messages exposing (..)
 
+import Json.Encode as Encode
+
 import Navigation exposing (Location)
 import Components.Warehouses.Messages
 import Components.Login.Messages
@@ -9,3 +11,4 @@ type Msg = WarehousesMsg Components.Warehouses.Messages.Msg
          | LoginMsg Components.Login.Messages.Msg
          | RegisterMsg Components.Register.Messages.Msg
          | OnLocationChange Location
+         | LoadLocalStorage String

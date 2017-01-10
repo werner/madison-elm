@@ -1,6 +1,8 @@
 module Update exposing (..)
 
 import Routing  exposing (parseLocation)
+import Navigation
+import Json.Decode exposing (..)
 import Messages exposing (Msg(..))
 import Models   exposing (Model)
 import Components.Warehouses.Update
@@ -37,3 +39,7 @@ update msg model =
             in
                 ( { model | route = newRoute }, Cmd.none )
 
+        LoadLocalStorage object ->
+            case decodeString (at ["currentUser", "id"] string) object of
+                Ok  obj  -> ( model, Cmd.none )
+                Err err -> ( model, Navigation.newUrl "#login" )
