@@ -15,7 +15,7 @@ var app = Elm.Main.fullscreen();
 
 app.ports.saveStorage.subscribe(function(storageObject) {
   Object.keys(storageObject).forEach(function (key) {
-    localStorage.setItem(key, JSON.stringify(storageObject[key]));
+    sessionStorage.setItem(key, JSON.stringify(storageObject[key]));
   });
 });
 
@@ -24,7 +24,7 @@ app.ports.doloadStorage.subscribe(function(storageKey) {
 });
 
 var loadFromLocalStorage = function(storageKey) {
-  var item = localStorage.getItem(storageKey);
+  var item = sessionStorage.getItem(storageKey);
   var fullItem = {};
   if (item === null) {
     app.ports.loadStorage.send('Nothing');
