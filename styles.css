@@ -1,0 +1,23 @@
+.madisonLoginIcon {
+    font-size: 2em !important;
+}
+
+input {
+    font-size: 1.3em !important;
+}
+
+.madisonRegularLink {
+    cursor: pointer;
+}
+
+.madisonInputField > label {
+    font-size: 1.1em !important;
+}
+
+.madisonErrorMessage {
+    color: #F44336;
+}
+
+.madisonWarehouseButton {
+    font-size: 2em !important;
+}

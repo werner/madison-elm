@@ -5,6 +5,7 @@ import Navigation
 import Json.Decode exposing (..)
 import Messages exposing (Msg(..))
 import Models   exposing (Model)
+import Ports.LocalStorage exposing (..)
 import Components.Warehouses.Update
 import Components.Login.Update
 import Components.Register.Update
@@ -37,9 +38,13 @@ update msg model =
             let
                 newRoute = parseLocation location
             in
-                ( { model | route = newRoute }, Cmd.none )
+                ( { model | route = newRoute }, doloadStorage "currentUser" )
 
         LoadLocalStorage object ->
-            case decodeString (at ["currentUser", "id"] string) object of
-                Ok  obj -> ( model, Cmd.none )
-                Err err -> ( model, Navigation.newUrl "#login" )
+            case model.route of
+                Routing.RegisterRoute -> ( model, Cmd.none )
+                Routing.LoginRoute    -> ( model, Cmd.none )
+                _                     ->
+                    case decodeString (at ["currentUser", "id"] string) object of
+                        Ok  obj -> ( model, Cmd.none )
+                        Err err -> ( model, Navigation.newUrl "#login" )
