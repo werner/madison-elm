@@ -11,8 +11,7 @@ css : Stylesheet
 css =
     (stylesheet << namespace "madison")
     [ (.) WarehouseIcon
-        [ fontSize (em 2) |> important
-        , marginTop (px -7) ]
+        [ fontSize (em 2) |> important ]
     , (.) WarehouseText
         [ paddingTop (px 3)
         , float left ]

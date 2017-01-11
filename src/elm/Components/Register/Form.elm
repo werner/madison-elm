@@ -7,6 +7,7 @@ import Html.CssHelpers
 import Form exposing (Form, FieldState)
 import Form.Input as Input
 
+import MainCss     exposing (..)
 import ViewHelpers exposing (..)
 import Components.Register.Messages exposing (..)
 import Components.Register.Models exposing (..)
@@ -24,8 +25,8 @@ form ({ form, errors, user } as model) =
                 [ div [ Attr.class "col s12 l6 offset-l3" ] 
                       [ div [ Attr.class "card-panel" ] 
                             [ div [ Attr.class "row center valign-wrapper" ]
-                                  [ div [ Attr.class "col s2"] [ img  [ Attr.src "static/img/logo-nav.png" ] [] ]
-                                  , div [ Attr.class "col s10 left-align "] [ div  [] [ h2 [] [ text "Register" ] ] ] ]
+                                  [ div [ Attr.class "left"] [ img  [ Attr.src "static/img/logo-nav.png" ] [] ]
+                                  , div [ class [ TitleNav ] ] [ div  [] [ h2 [] [ text "Register" ] ] ] ]
                             , div [ Attr.class "row" ] (showErrors errors)
                             , div [ Attr.class "row" ] (inputForm Input.textInput "email" "Email" form)
                             , div [ Attr.class "row" ] (inputForm Input.passwordInput "password" "Password" form)

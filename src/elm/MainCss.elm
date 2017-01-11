@@ -8,6 +8,7 @@ type CssClasses
     = RegularLink
     | InputField
     | ErrorMessage
+    | TitleNav
 
 css : Stylesheet
 css =
@@ -20,4 +21,6 @@ css =
         [ children [ label [ fontSize (em 1.1) |> important ] ] ]
     , (.) ErrorMessage
         [ color (hex "F44336") ]
+    , (.) TitleNav
+        [ float left, paddingTop (px 10), paddingLeft (px 2) ]
     ]
