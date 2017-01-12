@@ -10,6 +10,7 @@ type TranslationId
     = ErrInvalidEmail
     | PasswordNotMatch
     | ErrEmpty
+    | DuplicateError
 
 type Language 
     = English
@@ -28,6 +29,9 @@ translate lang trans =
 
         ErrEmpty ->
           TranslationSet "Can't be blank" "No puede quedar en blanco"
+
+        DuplicateError ->
+          TranslationSet "Duplicate record" "Registro duplicado"
   in
     case lang of
       English ->

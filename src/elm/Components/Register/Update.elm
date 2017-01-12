@@ -6,6 +6,8 @@ import Components.Register.Messages exposing (Msg(..))
 import Components.Register.Models exposing (..)
 import Components.Register.Commands exposing (..)
 
+import Translations.Utils exposing (..)
+
 update : Msg -> RegFormModel -> ( RegFormModel, Cmd Msg )
 update message ({ form, errors, user } as model) = 
     case message of
@@ -13,7 +15,7 @@ update message ({ form, errors, user } as model) =
             ( model, Cmd.none )
 
         OnRegister (Err error) ->
-            ( model, Cmd.none )
+            ( { model | errors = [ DuplicateError ] }, Cmd.none )
 
         FormMsg formMsg ->
             case ( formMsg, Form.getOutput form ) of
