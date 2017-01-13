@@ -13,8 +13,8 @@ import Ports.LocalStorage exposing (..)
 update : Msg -> LoginModel -> ( LoginModel, Cmd Msg )
 update message ({ user, referer } as model) = 
     case message of
-        GoToLogin email password referer ->
-            ( model, logIn (LoginModel (User email password) referer) )
+        GoToLogin ->
+            ( model, logIn (LoginModel (User model.user.email model.user.password) model.referer) )
 
         GoToRegister ->
             ( model, Navigation.newUrl "#register" )
@@ -37,6 +37,12 @@ update message ({ user, referer } as model) =
                                                  ]
                                             ) 
                                ] )
+
+        KeyDown key ->
+            if key == 13 then
+                ( model, logIn (LoginModel (User model.user.email model.user.password) referer) )
+            else
+                ( model, Cmd.none )
 
         OnLogIn referer (Err user) ->
             ( model, reloadTo "#login" )

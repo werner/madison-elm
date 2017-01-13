@@ -11,6 +11,8 @@ import Components.Login.Models exposing (..)
 import MainCss exposing (..)
 import Components.Login.Css exposing (..)
 
+import ViewHelpers exposing (onKeyDown)
+
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
@@ -32,7 +34,8 @@ view ({ user, referer } as model) =
                             , div [ Attr.class "row" ]
                                   [ div [ class [ InputField ], Attr.class "input-field" ] 
                                         [ i [ class [ LoginIcon ], Attr.class "material-icons prefix" ] [ text "lock_outline" ]
-                                        , input [ Attr.type_ "password", onInput Password, Attr.class "validate" ] [] 
+                                        , input [ Attr.type_ "password", Attr.class "validate",
+                                                  onInput Password,      onKeyDown KeyDown ] [] 
                                         , label [] [ text "Password" ] ]
                                   ]
                             , div [ Attr.class "row" ]
@@ -42,7 +45,7 @@ view ({ user, referer } as model) =
                                   ]
                             , div [ Attr.class "row" ]
                                   [ button [ Attr.class "btn waves-effect waves-light col s12"
-                                           , onClick ( GoToLogin user.email user.password referer ) ] [ text "Login" ] ]
+                                           , onClick ( GoToLogin ) ] [ text "Login" ] ]
                             , div [ Attr.class "row" ]
                                   [ div [ Attr.class "col s5" ] [ a [ class [ RegularLink ],
                                                                       onClick GoToRegister ] 

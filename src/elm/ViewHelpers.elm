@@ -1,7 +1,9 @@
-module ViewHelpers exposing (inputForm, errorFor, showErrors)
+module ViewHelpers exposing (inputForm, errorFor, showErrors, onKeyDown)
 
 import Form exposing (Form, FieldState)
 import Html exposing (..)
+import Html.Events exposing (keyCode, on)
+import Json.Decode as Json
 import Html.Attributes as Attr
 import Html.CssHelpers
 
@@ -37,3 +39,7 @@ errorFor field =
 showErrors : List TranslationId -> List (Html msg)
 showErrors errors =
     List.map (\error -> div [ class [ ErrorMessage ] ] [ text (translate English error) ]) errors
+
+onKeyDown : (Int -> msg) -> Attribute msg
+onKeyDown tagger =
+  on "keydown" (Json.map tagger keyCode)
