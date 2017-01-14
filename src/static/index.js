@@ -4,8 +4,6 @@ require('font-awesome/css/font-awesome.css');
 
 require( './styles/main.scss' );
 require( '../elm/Stylesheets' );
-var $ = jQuery = require( '../../node_modules/jquery/dist/jquery.js' );           // <--- remove if jQuery not needed
-require( '../../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js' );   // <--- remove if Bootstrap's JS not needed 
 require( 'materialize-css/dist/js/materialize.min.js' );
 
 // inject bundled Elm app into div#main
@@ -13,18 +11,19 @@ var Elm = require( '../elm/Main' );
 
 var app = Elm.Main.fullscreen();
 
-app.ports.saveStorage.subscribe(function(storageObject) {
+app.ports.saveStorage.subscribe(function(args) {
+  var [storageObject, isLocalStorage] = args;
   Object.keys(storageObject).forEach(function (key) {
-    sessionStorage.setItem(key, JSON.stringify(storageObject[key]));
+    storage(isLocalStorage).setItem(key, JSON.stringify(storageObject[key]));
   });
 });
 
 app.ports.doloadStorage.subscribe(function(storageKey) {
-  loadFromLocalStorage(storageKey);
+  loadFromStorage(storageKey);
 });
 
-var loadFromLocalStorage = function(storageKey) {
-  var item = sessionStorage.getItem(storageKey);
+var loadFromStorage = function(storageKey) {
+  var item = sessionStorage.getItem(storageKey) || localStorage.getItem(storageKey);
   var fullItem = {};
   if (item === null) {
     app.ports.loadStorage.send('Nothing');
@@ -32,4 +31,8 @@ var loadFromLocalStorage = function(storageKey) {
     fullItem[storageKey] = JSON.parse(item);
     app.ports.loadStorage.send(JSON.stringify(fullItem));
   }
+}
+
+var storage = function(isLocalStorage) {
+  return isLocalStorage ? localStorage : sessionStorage;
 }

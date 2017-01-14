@@ -7,7 +7,3 @@ type alias User =
 type alias CurrentUser =
     { id    : String
     , email : String }
-
-type alias LoginModel =
-    { user    : User 
-    , referer : String }

@@ -10,7 +10,7 @@ import Components.Warehouses.Update
 import Components.Login.Update
 import Components.Register.Update
 
-import Components.Login.Models exposing (LoginModel, User, CurrentUser) 
+import Components.Login.Models exposing (User, CurrentUser) 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
@@ -18,9 +18,9 @@ update msg model =
         LoginMsg subMsg ->
             let
                 ( updateLogin, cmd ) =
-                    Components.Login.Update.update subMsg model.user
+                    Components.Login.Update.update subMsg model
             in
-                ( { model | user = updateLogin }, Cmd.map LoginMsg cmd )
+                ( { model | user = updateLogin.user }, Cmd.map LoginMsg cmd )
 
         RegisterMsg subMsg ->
             let
@@ -49,5 +49,4 @@ update msg model =
                 _                     ->
                     case decodeString (at ["currentUser", "id"] string) object of
                         Ok  obj -> ( model, Cmd.none )
-                        Err err -> ( { model | user = (LoginModel (User "" "")) model.referer }
-                                   ,  Navigation.newUrl "#login" )
+                        Err err -> ( { model | user = User "" "" },  Navigation.newUrl "#login" )

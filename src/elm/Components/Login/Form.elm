@@ -16,8 +16,8 @@ import ViewHelpers exposing (onKeyDown)
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : LoginModel -> Html Msg
-view ({ user, referer } as model) = 
+view : User -> Html Msg
+view model = 
     div [ Attr.class "container" ]
         [ div [ Attr.class "row" ]
                 [ div [ Attr.class "col s12 l3 offset-l4" ] 
