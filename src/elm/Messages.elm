@@ -1,7 +1,5 @@
 module Messages exposing (..)
 
-import Json.Encode as Encode
-
 import Navigation exposing (Location)
 import Components.Warehouses.Messages
 import Components.Login.Messages

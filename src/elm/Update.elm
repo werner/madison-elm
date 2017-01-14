@@ -10,6 +10,8 @@ import Components.Warehouses.Update
 import Components.Login.Update
 import Components.Register.Update
 
+import Components.Login.Models exposing (LoginModel, User, CurrentUser) 
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model = 
     case msg of
@@ -47,4 +49,5 @@ update msg model =
                 _                     ->
                     case decodeString (at ["currentUser", "id"] string) object of
                         Ok  obj -> ( model, Cmd.none )
-                        Err err -> ( model, Navigation.newUrl "#login" )
+                        Err err -> ( { model | user = (LoginModel (User "" "")) model.referer }
+                                   ,  Navigation.newUrl "#login" )

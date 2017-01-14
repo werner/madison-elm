@@ -17,7 +17,7 @@ init location =
     let currentRoute = 
         Routing.parseLocation location
     in
-        ( initialModel currentRoute, doloadStorage "currentUser" )
+        ( initialModel currentRoute location.hash, doloadStorage "currentUser" )
 
 subscriptions : Model -> Sub Msg
 subscriptions model = 

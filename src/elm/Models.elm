@@ -12,11 +12,13 @@ type alias Model =
     , user        : LoginModel
     , currentUser : CurrentUser
     , regUser     : RegFormModel
+    , referer     : String
     , route       : Routing.Route }
 
-initialModel : Routing.Route -> Model
-initialModel route = { warehouses = []
-                     , currentUser = CurrentUser "" ""
-                     , user = LoginModel (User "" "") ""
-                     , regUser = RegFormModel (Form.initial [] validate) [] (RegUser "" "" "" "" "" "")
-                     , route = route }
+initialModel : Routing.Route -> String -> Model
+initialModel route referer = { warehouses = []
+                             , currentUser = CurrentUser "" ""
+                             , user = LoginModel (User "" "") ""
+                             , regUser = RegFormModel (Form.initial [] validate) [] (RegUser "" "" "" "" "" "")
+                             , referer = referer
+                             , route = route }
