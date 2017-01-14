@@ -26,6 +26,15 @@ update message model =
         Password password ->
             ( { model | user = User model.user.email password }, Cmd.none )
 
+        RememberMe value ->
+            ( { model | isLocalStorage = value }, Cmd.none )
+
+        KeyDown key ->
+            if key == 13 then
+                ( model, logIn (User model.user.email model.user.password) )
+            else
+                ( model, Cmd.none )
+
         OnLogIn (Ok user) ->
             ( model, Cmd.batch [ reloadTo model.referer, 
                                  saveStorage (
@@ -39,17 +48,12 @@ update message model =
                                             , model.isLocalStorage ) 
                                ] )
 
-        KeyDown key ->
-            if key == 13 then
-                ( model, logIn (User model.user.email model.user.password) )
-            else
-                ( model, Cmd.none )
-
         OnLogIn (Err user) ->
             ( model, reloadTo "#login" )
 
 reloadTo : String -> Cmd msg
 reloadTo referer = 
     case referer of
-        "" -> Navigation.newUrl "#dashboard"
-        x  -> Navigation.newUrl x
+        ""       -> Navigation.newUrl "#dashboard"
+        "#login" -> Navigation.newUrl "#dashboard"
+        x        -> Navigation.newUrl x

@@ -8,4 +8,5 @@ type Msg = GoToLogin
          | GoToRegister
          | Email String
          | Password String
+         | RememberMe Bool
          | KeyDown Int

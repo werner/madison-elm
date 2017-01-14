@@ -2,7 +2,7 @@ module Components.Login.Form exposing (..)
 
 import Html exposing (..)
 import Html.Attributes as Attr
-import Html.Events exposing (onInput, onClick)
+import Html.Events exposing (onInput, onClick, onCheck)
 import Html.CssHelpers
 
 import Components.Login.Messages exposing (..)
@@ -40,7 +40,7 @@ view model =
                                   ]
                             , div [ Attr.class "row" ]
                                   [ div [ class [ InputField ], Attr.class "input-field" ] 
-                                        [ input [ Attr.type_ "checkbox", Attr.id "remember-me" ] []
+                                        [ input [ onCheck RememberMe, Attr.type_ "checkbox", Attr.id "remember-me" ] []
                                         , label [ Attr.for "remember-me" ] [ text "Remember me" ] ]
                                   ]
                             , div [ Attr.class "row" ]

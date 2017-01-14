@@ -17,10 +17,10 @@ type alias Model =
     , route          : Routing.Route }
 
 initialModel : Routing.Route -> String -> Model
-initialModel route referer = { warehouses = []
-                             , currentUser = CurrentUser "" ""
-                             , user = User "" ""
-                             , regUser = RegFormModel (Form.initial [] validate) [] (RegUser "" "" "" "" "" "")
-                             , referer = referer
+initialModel route referer = { warehouses     = []
+                             , currentUser    = CurrentUser "" ""
+                             , user           = User "" ""
+                             , regUser        = RegFormModel (Form.initial [] validate) [] (RegUser "" "" "" "" "" "")
+                             , referer        = referer
                              , isLocalStorage = False
-                             , route = route }
+                             , route          = route }
