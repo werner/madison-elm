@@ -20,7 +20,7 @@ update msg model =
                 ( updateLogin, cmd ) =
                     Components.Login.Update.update subMsg model
             in
-                ( { model | user = updateLogin.user }, Cmd.map LoginMsg cmd )
+                ( { model | user = updateLogin.user, isLocalStorage = updateLogin.isLocalStorage }, Cmd.map LoginMsg cmd )
 
         RegisterMsg subMsg ->
             let
