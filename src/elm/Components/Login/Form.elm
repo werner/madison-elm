@@ -20,7 +20,7 @@ view : User -> Html Msg
 view model = 
     div [ Attr.class "container" ]
         [ div [ Attr.class "row" ]
-                [ div [ Attr.class "col s12 l3 offset-l4" ] 
+                [ div [ Attr.class "col s12 l4 offset-l4" ] 
                       [ div [ Attr.class "card-panel" ] 
                             [ div [ Attr.class "row center" ]
                                   [ div [ Attr.class "col s12"] [ img  [ Attr.src "static/img/logo-small.png" ] [] ]

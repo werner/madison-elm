@@ -7,7 +7,6 @@ import Components.Warehouses.Models exposing (Warehouse)
 import Html.Events exposing (onClick)
 
 import MainCss exposing (..)
-import Components.Warehouses.Css exposing (..)
 
 import Html.CssHelpers
 
@@ -28,7 +27,7 @@ list warehouses =
                           [ div [ Attr.class "row center valign-wrapper" ]
                                 [ div [ Attr.class "left"] [ img  [ Attr.src "static/img/logo-nav.png" ] [] ]
                                 , div [ class [ TitleNav ] ] 
-                                      [ div  [] [ h2 [] [ text "Warehouses" ] ] ]
+                                      [ div  [] [ h4 [] [ text "Warehouses" ] ] ]
                                 ]
                           , div [ Attr.class "row" ] 
                                 [ table [] 
@@ -45,7 +44,7 @@ list warehouses =
                               ]
                           , div [ Attr.class "row" ]
                                 [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right" ] 
-                                         [ i [ class [ WarehouseIcon ], Attr.class "material-icons" ] 
+                                         [ i [ Attr.class "material-icons" ] 
                                              [ text "add" ]
                                          ]
                                 ]

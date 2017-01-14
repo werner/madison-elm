@@ -2,7 +2,6 @@
 require('materialize-css/dist/css/materialize.min.css');
 require('font-awesome/css/font-awesome.css');
 
-require( './styles/main.scss' );
 require( '../elm/Stylesheets' );
 require( 'materialize-css/dist/js/materialize.min.js' );
 

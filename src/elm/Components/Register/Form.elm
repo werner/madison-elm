@@ -26,7 +26,7 @@ form ({ form, errors, user } as model) =
                       [ div [ Attr.class "card-panel" ] 
                             [ div [ Attr.class "row center valign-wrapper" ]
                                   [ div [ Attr.class "left"] [ img  [ Attr.src "static/img/logo-nav.png" ] [] ]
-                                  , div [ class [ TitleNav ] ] [ div  [] [ h2 [] [ text "Register" ] ] ] ]
+                                  , div [ class [ TitleNav ] ] [ div  [] [ h4 [] [ text "Register" ] ] ] ]
                             , div [ Attr.class "row" ] (showErrors errors)
                             , div [ Attr.class "row" ] (inputForm Input.textInput "email" "Email" form)
                             , div [ Attr.class "row" ] (inputForm Input.passwordInput "password" "Password" form)
