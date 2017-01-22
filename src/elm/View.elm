@@ -5,10 +5,9 @@ import Messages exposing (Msg(..))
 import Models   exposing (Model)
 import Components.Login.Form
 import Components.Register.Form
+import ViewHelpers exposing (notFoundView)
 
-import Components.Warehouses.Edit
-import Components.Warehouses.List
-import Components.Warehouses.Models exposing (WarehouseId)
+import Components.Warehouses.View exposing (view)
 import Routing exposing (Route(..))
 
 view : Model -> Html Msg
@@ -25,31 +24,8 @@ page model =
         RegisterRoute ->
             Html.map RegisterMsg (Components.Register.Form.view model.regUser)
 
-        WarehousesRoute ->
-            Html.map WarehousesMsg (Components.Warehouses.List.view model.warehouses)
-
-        WarehouseRoute id -> 
-            warehouseEditPage model id
+        WarehouseRoutes a ->
+            Html.map WarehousesMsg (Components.Warehouses.View.view a model.warehouses)
 
         NotFoundRoute ->
             notFoundView
-
-warehouseEditPage : Model -> WarehouseId -> Html Msg
-warehouseEditPage model warehouseId = 
-    let
-        maybeWarehouse =
-            model.warehouses
-                |> List.filter (\warehouse -> warehouse.id == warehouseId)
-                |> List.head
-    in
-        case maybeWarehouse of
-            Just warehouse ->
-                Html.map WarehousesMsg ( Components.Warehouses.Edit.view warehouse)
-
-            Nothing ->
-                notFoundView
-
-notFoundView : Html msg
-notFoundView = 
-    div []
-        [ text "Not found" ]

@@ -1,4 +1,4 @@
-module ViewHelpers exposing (inputForm, errorFor, showErrors, onKeyDown)
+module ViewHelpers exposing (..)
 
 import Form exposing (Form, FieldState)
 import Html exposing (..)
@@ -43,3 +43,8 @@ showErrors errors =
 onKeyDown : (Int -> msg) -> Attribute msg
 onKeyDown tagger =
   on "keydown" (Json.map tagger keyCode)
+
+notFoundView : Html msg
+notFoundView = 
+    div []
+        [ text "Not found" ]
