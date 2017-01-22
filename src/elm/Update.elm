@@ -32,9 +32,9 @@ update msg model =
         WarehousesMsg subMsg ->
             let
                 ( updateWarehouses, cmd ) =
-                    Components.Warehouses.Update.update subMsg model.warehouses
+                    Components.Warehouses.Update.update subMsg model.warehouseModel
             in
-                ( { model | warehouses = updateWarehouses }, Cmd.map WarehousesMsg cmd )
+                ( { model | warehouseModel = updateWarehouses }, Cmd.map WarehousesMsg cmd )
 
         OnLocationChange location ->
             let

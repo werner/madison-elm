@@ -3,12 +3,12 @@ module Models exposing (..)
 import Form exposing (Form)
 import Routing
 
-import Components.Warehouses.Models exposing (Warehouse)
+import Components.Warehouses.Models as WarehouseModelC exposing (Warehouse, WarehouseModel, validate)
 import Components.Login.Models      exposing (User, CurrentUser)
-import Components.Register.Models   exposing (RegFormModel, RegUser, validate)
+import Components.Register.Models   as RegisterModelC exposing (RegFormModel, RegUser, validate)
 
 type alias Model =
-    { warehouses     : List Warehouse
+    { warehouseModel : WarehouseModel
     , user           : User
     , currentUser    : CurrentUser
     , regUser        : RegFormModel
@@ -17,10 +17,17 @@ type alias Model =
     , route          : Routing.Route }
 
 initialModel : Routing.Route -> String -> Model
-initialModel route referer = { warehouses     = []
+initialModel route referer = { warehouseModel = WarehouseModelC.WarehouseModel 
+                                                    (Form.initial [] WarehouseModelC.validate)
+                                                    []
+                                                    (WarehouseModelC.Warehouse "" "" 0.0)
+                                                    []
                              , currentUser    = CurrentUser "" ""
                              , user           = User "" ""
-                             , regUser        = RegFormModel (Form.initial [] validate) [] (RegUser "" "" "" "" "" "")
+                             , regUser        = RegisterModelC.RegFormModel 
+                                                    (Form.initial [] RegisterModelC.validate) 
+                                                    [] 
+                                                    (RegisterModelC.RegUser "" "" "" "" "" "")
                              , referer        = referer
                              , isLocalStorage = False
                              , route          = route }

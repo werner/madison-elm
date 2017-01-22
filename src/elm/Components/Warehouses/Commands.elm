@@ -22,10 +22,9 @@ collectionDecoder = Decode.list memberDecoder
 
 memberDecoder : Decode.Decoder Warehouse
 memberDecoder =
-    Decode.map4 Warehouse
+    Decode.map3 Warehouse
         (field "id"     Decode.string)
         (field "name"   Decode.string)
-        (field "userId" Decode.int)
         (field "stock"  Decode.float)
 
 saveRequest : Warehouse -> Http.Request Warehouse
@@ -51,7 +50,6 @@ memberEncoded warehouse =
         list =
             [ ( "id",     Encode.string warehouse.id ) 
             , ( "name",   Encode.string warehouse.name )
-            , ( "userId", Encode.int warehouse.userId )
             , ( "stock",  Encode.float warehouse.stock )]
     in
         list

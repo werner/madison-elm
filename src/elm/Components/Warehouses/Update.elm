@@ -1,33 +1,46 @@
 module Components.Warehouses.Update exposing (..)
 
+import Form exposing (Form)
+
 import Components.Warehouses.Messages exposing (Msg(..))
-import Components.Warehouses.Models   exposing (Warehouse, WarehouseId)
+import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
 import Components.Warehouses.Commands exposing (save)
 import Navigation
 
-update : Msg -> List Warehouse -> ( List Warehouse, Cmd Msg )
-update message warehouses =
+update : Msg -> WarehouseModel -> ( WarehouseModel, Cmd Msg )
+update message ({ form, errors, warehouse, warehouses } as model) =
     case message of
         OnFetchAll (Ok newWarehouses) ->
-            ( newWarehouses, Cmd.none )
+            ( { model | warehouses = newWarehouses }, Cmd.none )
  
         OnFetchAll (Err error) ->
-            ( warehouses, Cmd.none )
+            ( model, Cmd.none )
 
         ShowWarehouses ->
-            ( warehouses, Navigation.newUrl "#warehouses" )
+            ( model, Navigation.newUrl "#warehouses" )
 
         ShowWarehouse id ->
-            ( warehouses, Navigation.newUrl ("#warehouses/" ++ id) )
+            ( model, Navigation.newUrl ("#warehouses/" ++ id) )
+
+        GotoNewWarehouse ->
+            ( model, Navigation.newUrl ("#warehouses/new") )
 
         ChangeWarehouse id name ->
-            ( warehouses, changeWarehouse id name warehouses |> Cmd.batch )
+            ( model, changeWarehouse id name warehouses |> Cmd.batch )
+
+        FormMsg formMsg ->
+            case ( formMsg, Form.getOutput form ) of
+                ( Form.Submit, Just warehouse ) ->
+                    ( model, Cmd.none )
+
+                _ ->
+                    ( { model | form = Form.update formMsg form }, Cmd.none )
 
         OnSave (Ok updatedWarehouse) ->
-            ( updateWarehouse updatedWarehouse warehouses, Cmd.none )
+            ( { model | warehouses = updateWarehouse updatedWarehouse warehouses }, Cmd.none )
 
         OnSave (Err error) ->
-            ( warehouses, Cmd.none )
+            ( model, Cmd.none )
 
 changeWarehouse : WarehouseId -> String -> List Warehouse -> List (Cmd Msg)
 changeWarehouse warehouseId newName warehouses = 

@@ -1,21 +1,35 @@
 module Components.Warehouses.Models exposing (..)
 
+import Form exposing (Form)
+import Translations.Utils exposing (TranslationId(..))
+import Form.Validate as Validate exposing (..)
+
 type alias WarehouseId = String
 
 type alias Warehouse = 
     { id     : WarehouseId
     , name   : String
-    , userId : Int 
     , stock  : Float }
 
-loggedInUser : Int
-loggedInUser = 0
+type alias WarehouseModel =
+    { form       : Form TranslationId Warehouse
+    , errors     : List TranslationId 
+    , warehouse  : Warehouse
+    , warehouses : List Warehouse
+    }
 
 new : Warehouse
 new = 
     {
       id     = "0"
     , name   = ""
-    , userId = loggedInUser
     , stock  = 0
     }
+
+validate : Validation TranslationId Warehouse
+validate = 
+    map3 Warehouse 
+        (field "id" string)
+        (field "name" string)
+        (field "stock" float)
+

@@ -47,4 +47,4 @@ onKeyDown tagger =
 notFoundView : Html msg
 notFoundView = 
     div []
-        [ text "Not found" ]
+        [ text "Url not found" ]

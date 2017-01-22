@@ -43,7 +43,8 @@ list warehouses =
                                 ]
                               ]
                           , div [ Attr.class "row" ]
-                                [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right" ] 
+                                [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
+                                         , onClick GotoNewWarehouse ] 
                                          [ i [ Attr.class "material-icons" ] 
                                              [ text "add" ]
                                          ]
