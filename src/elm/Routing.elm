@@ -1,22 +1,20 @@
 module Routing exposing (..)
 
 import Navigation exposing (Location)
-import Components.Warehouses.Models exposing (WarehouseId)
 import UrlParser exposing (..)
+
+import Components.Warehouses.Routing exposing (WarehouseRoute(..), matcherWarehouse)
 
 type Route = LoginRoute
            | RegisterRoute
-           | WarehousesRoute
-           | WarehouseRoute WarehouseId
            | NotFoundRoute
+           | WarehouseRoutes WarehouseRoute
 
 matchers : Parser (Route -> a) a
 matchers = oneOf
-         [ map LoginRoute      (s "login")
-         , map RegisterRoute   (s "register")
-         , map WarehouseRoute  (s "warehouses" </> string)
-         , map WarehousesRoute (s "warehouses")
-         ]
+         ([ map LoginRoute      (s "login")
+          , map RegisterRoute   (s "register")
+          ] ++ matcherWarehouse WarehouseRoutes)
 
 parseLocation : Location -> Route
 parseLocation location = 
