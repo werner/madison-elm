@@ -22,7 +22,7 @@ warehouseEditPage warehouses warehouseId =
     let
         maybeWarehouse =
             warehouses
-                |> List.filter (\warehouse -> warehouse.id == warehouseId)
+                |> List.filter (\warehouse -> warehouse.id == (Just warehouseId))
                 |> List.head
     in
         case maybeWarehouse of

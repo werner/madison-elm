@@ -31,7 +31,10 @@ card ({ form, errors, warehouse, warehouses } as model) =
                                                              ]
                                 , div [ Attr.class "col s2 l2" ]
                                       [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                                               , onClick ShowWarehouses ] [ text "Back" ] ] 
+                                               , onClick ShowWarehouses ] 
+                                               [ i [ Attr.class "fa fa-long-arrow-left" ] [] 
+                                               ]
+                                      ] 
                                 
                                 ]
                           , Html.map FormMsg (formWarehouse model) 
@@ -46,7 +49,10 @@ formWarehouse ({ form, errors, warehouse, warehouses } as model) =
         [ div [ Attr.class "row" ] (showErrors errors)
         , div [ Attr.class "row" ] (inputForm Input.textInput "name" "Name" form)
         , div [ Attr.class "row" ]
-              [ button [ Attr.class "btn waves-effect waves-light col s12"
-                           , onClick Form.Submit ] [ text "Save" ]
+              [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
+                           , onClick Form.Submit ] 
+                       [ i [ Attr.class "material-icons" ] 
+                           [ text "done" ] 
+                       ]
               ]
         ]

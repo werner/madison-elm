@@ -23,9 +23,9 @@ collectionDecoder = Decode.list memberDecoder
 memberDecoder : Decode.Decoder Warehouse
 memberDecoder =
     Decode.map3 Warehouse
-        (field "id"     Decode.string)
+        (field "id"     (Decode.maybe Decode.string))
         (field "name"   Decode.string)
-        (field "stock"  Decode.float)
+        (field "stock"  (Decode.maybe Decode.float))
 
 saveRequest : Warehouse -> Http.Request Warehouse
 saveRequest warehouse = 
@@ -35,7 +35,7 @@ saveRequest warehouse =
         , headers = []
         , method = "PUT"
         , timeout = Nothing
-        , url = saveUrl warehouse.id
+        , url = saveUrl (Maybe.withDefault "" warehouse.id)
         , withCredentials = False
         }
 
@@ -48,9 +48,9 @@ memberEncoded : Warehouse -> Encode.Value
 memberEncoded warehouse =
     let
         list =
-            [ ( "id",     Encode.string warehouse.id ) 
+            [ ( "id",     Encode.string (Maybe.withDefault "" warehouse.id) ) 
             , ( "name",   Encode.string warehouse.name )
-            , ( "stock",  Encode.float warehouse.stock )]
+            , ( "stock",  Encode.float (Maybe.withDefault 0.0 warehouse.stock) )]
     in
         list
             |> Encode.object

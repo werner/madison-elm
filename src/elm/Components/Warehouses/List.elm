@@ -57,9 +57,9 @@ list warehouses =
 warehouseRow : Warehouse -> Html Msg
 warehouseRow warehouse = 
     tr []
-       [ td [] [ text warehouse.id ]
+       [ td [] [ text (Maybe.withDefault "" warehouse.id) ]
        , td [] [ text warehouse.name] 
-       , td [] [ text (toString warehouse.stock) ]
+       , td [] [ text (toString (Maybe.withDefault 0.0 warehouse.stock)) ]
        , td [] [ editBtn warehouse ]
        ]
 

@@ -20,7 +20,7 @@ update message ({ form, errors, warehouse, warehouses } as model) =
             ( model, Navigation.newUrl "#warehouses" )
 
         ShowWarehouse id ->
-            ( model, Navigation.newUrl ("#warehouses/" ++ id) )
+            ( model, Navigation.newUrl ("#warehouses/" ++ Maybe.withDefault "" id) )
 
         GotoNewWarehouse ->
             ( model, Navigation.newUrl ("#warehouses/new") )
@@ -42,7 +42,7 @@ update message ({ form, errors, warehouse, warehouses } as model) =
         OnSave (Err error) ->
             ( model, Cmd.none )
 
-changeWarehouse : WarehouseId -> String -> List Warehouse -> List (Cmd Msg)
+changeWarehouse : Maybe WarehouseId -> String -> List Warehouse -> List (Cmd Msg)
 changeWarehouse warehouseId newName warehouses = 
     let
         cmdForWarehouse existingWarehouse = 

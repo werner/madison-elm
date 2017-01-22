@@ -6,8 +6,8 @@ import Components.Warehouses.Models exposing ( WarehouseId, Warehouse )
 
 type Msg = OnFetchAll (Result Http.Error (List Warehouse))
          | ShowWarehouses
-         | ShowWarehouse WarehouseId
+         | ShowWarehouse (Maybe WarehouseId)
          | GotoNewWarehouse
-         | ChangeWarehouse WarehouseId String
+         | ChangeWarehouse (Maybe WarehouseId) String
          | OnSave (Result Http.Error Warehouse)
          | FormMsg Form.Msg

@@ -7,9 +7,9 @@ import Form.Validate as Validate exposing (..)
 type alias WarehouseId = String
 
 type alias Warehouse = 
-    { id     : WarehouseId
+    { id     : Maybe WarehouseId
     , name   : String
-    , stock  : Float }
+    , stock  : Maybe Float }
 
 type alias WarehouseModel =
     { form       : Form TranslationId Warehouse
@@ -21,15 +21,15 @@ type alias WarehouseModel =
 new : Warehouse
 new = 
     {
-      id     = "0"
+      id     = Nothing
     , name   = ""
-    , stock  = 0
+    , stock  = Nothing
     }
 
 validate : Validation TranslationId Warehouse
 validate = 
     map3 Warehouse 
-        (field "id" string)
+        (field "id" (maybe string))
         (field "name" string)
-        (field "stock" float)
+        (field "stock" (maybe float))
 

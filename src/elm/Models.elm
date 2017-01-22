@@ -20,7 +20,7 @@ initialModel : Routing.Route -> String -> Model
 initialModel route referer = { warehouseModel = WarehouseModelC.WarehouseModel 
                                                     (Form.initial [] WarehouseModelC.validate)
                                                     []
-                                                    (WarehouseModelC.Warehouse "" "" 0.0)
+                                                    (WarehouseModelC.Warehouse Nothing "" Nothing)
                                                     []
                              , currentUser    = CurrentUser "" ""
                              , user           = User "" ""
