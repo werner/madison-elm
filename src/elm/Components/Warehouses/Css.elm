@@ -6,13 +6,17 @@ import Css.Namespace exposing (namespace)
 type CssClasses
     = WarehouseIcon
     | WarehouseText
+    | WarehouseSave
 
 css : Stylesheet
 css =
     (stylesheet << namespace "madison")
     [ (.) WarehouseIcon
-        [ fontSize (em 2) |> important ]
+        [ marginLeft (px -10) |> important ]
     , (.) WarehouseText
         [ paddingTop (px 3)
         , float left ]
+    , (.) WarehouseSave
+        [ top (px 25)
+        , width (px 50) ]
     ]

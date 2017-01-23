@@ -11,6 +11,7 @@ import MainCss     exposing (..)
 import ViewHelpers exposing (..)
 import Components.Warehouses.Messages exposing (Msg(..))
 import Components.Warehouses.Models exposing (WarehouseModel)
+import Components.Warehouses.Css exposing (..)
 
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
@@ -45,14 +46,18 @@ card ({ form, errors, warehouse, warehouses } as model) =
 
 formWarehouse : WarehouseModel -> Html Form.Msg
 formWarehouse ({ form, errors, warehouse, warehouses } as model) =
-    div []
+    div [ ]
         [ div [ Attr.class "row" ] (showErrors errors)
-        , div [ Attr.class "row" ] (inputForm Input.textInput "name" "Name" form)
         , div [ Attr.class "row" ]
-              [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                           , onClick Form.Submit ] 
-                       [ i [ Attr.class "material-icons" ] 
-                           [ text "done" ] 
-                       ]
+              [ div [ Attr.class "col s10 l10" ] (inputForm Input.textInput "name" "Name" form)
+              , div [ Attr.class "col s2 l2" ]
+                    [ button [ class [ WarehouseSave ]
+                             , Attr.class "btn waves-effect waves-light right"
+                                 , onClick Form.Submit ] 
+                             [ i [ class [ WarehouseIcon ]
+                                 , Attr.class "material-icons" ] 
+                                 [ text "done" ] 
+                             ]
+                    ]
               ]
         ]
