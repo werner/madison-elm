@@ -3,7 +3,6 @@ require('materialize-css/dist/css/materialize.min.css');
 require('font-awesome/css/font-awesome.css');
 
 require( '../elm/Stylesheets' );
-require( 'materialize-css/dist/js/materialize.min.js' );
 
 // inject bundled Elm app into div#main
 var Elm = require( '../elm/Main' );
