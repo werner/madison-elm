@@ -1,11 +1,13 @@
 module Components.Warehouses.List exposing (..)
 
+import Dialog
 import Html exposing (..)
 import Html.Attributes as Attr
-import Components.Warehouses.Messages exposing (..)
-import Components.Warehouses.Models exposing (Warehouse)
+import Components.Warehouses.Messages as WarehouseMsg exposing (..)
+import Components.Warehouses.Models exposing (Warehouse, WarehouseModel)
 import Html.Events exposing (onClick)
 
+import Modal   exposing (dialogConfig, Msg(..))
 import MainCss exposing (..)
 
 import Html.CssHelpers
@@ -13,13 +15,13 @@ import Html.CssHelpers
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : List Warehouse -> Html Msg
-view warehouses = 
+view : WarehouseModel -> Html WarehouseMsg.Msg
+view model = 
     div []
-        [ list warehouses]
+        [ list model ]
 
-list : List Warehouse -> Html Msg
-list warehouses = 
+list : WarehouseModel -> Html WarehouseMsg.Msg
+list ({ warehouses, modal } as model) = 
     div [ Attr.class "container" ]
         [ div [ Attr.class "row" ]
               [ div [ Attr.class "col s12 l12" ]
@@ -43,8 +45,9 @@ list warehouses =
                                 ]
                               ]
                           , div [ Attr.class "row" ]
-                                [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                                         , onClick GotoNewWarehouse ] 
+                                [ Html.map ModalMsg <| button 
+                                         [ Attr.class "btn-floating btn-large waves-effect waves-light right"
+                                         , onClick ShowModal ] 
                                          [ i [ Attr.class "material-icons" ] 
                                              [ text "add" ]
                                          ]
@@ -52,9 +55,16 @@ list warehouses =
                           ] 
                     ]
               ]
+        , Html.map ModalMsg <| Dialog.view 
+                               (if model.modal.showDialog then
+                                   Just <| dialogConfig ( div [] [ text "New Warehouse" ] )
+                                                        ( div [] [ text "Body" ] )
+                               else
+                                   Nothing
+                               )
         ]
 
-warehouseRow : Warehouse -> Html Msg
+warehouseRow : Warehouse -> Html WarehouseMsg.Msg
 warehouseRow warehouse = 
     tr []
        [ td [] [ text (Maybe.withDefault "" warehouse.id) ]
@@ -63,7 +73,7 @@ warehouseRow warehouse =
        , td [] [ editBtn warehouse ]
        ]
 
-editBtn : Warehouse -> Html Msg
+editBtn : Warehouse -> Html WarehouseMsg.Msg
 editBtn warehouse =
     button
         [ Attr.class "btn regular" 

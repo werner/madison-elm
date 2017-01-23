@@ -2,13 +2,15 @@ module Components.Warehouses.Update exposing (..)
 
 import Form exposing (Form)
 
-import Components.Warehouses.Messages exposing (Msg(..))
+import Modal exposing (Msg(..), update)
+
+import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
 import Components.Warehouses.Commands exposing (save)
 import Navigation
 
-update : Msg -> WarehouseModel -> ( WarehouseModel, Cmd Msg )
-update message ({ form, errors, warehouse, warehouses } as model) =
+update : WarehouseMsg.Msg -> WarehouseModel -> ( WarehouseModel, Cmd WarehouseMsg.Msg )
+update message ({ form, errors, warehouse, warehouses, modal } as model) =
     case message of
         OnFetchAll (Ok newWarehouses) ->
             ( { model | warehouses = newWarehouses }, Cmd.none )
@@ -36,13 +38,17 @@ update message ({ form, errors, warehouse, warehouses } as model) =
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )
 
+        ModalMsg modalMsg ->
+            let ( updateModal, cmd ) = Modal.update modalMsg modal
+            in ( { model | modal = updateModal }, Cmd.none )
+
         OnSave (Ok updatedWarehouse) ->
             ( { model | warehouses = updateWarehouse updatedWarehouse warehouses }, Cmd.none )
 
         OnSave (Err error) ->
             ( model, Cmd.none )
 
-changeWarehouse : Maybe WarehouseId -> String -> List Warehouse -> List (Cmd Msg)
+changeWarehouse : Maybe WarehouseId -> String -> List Warehouse -> List (Cmd WarehouseMsg.Msg)
 changeWarehouse warehouseId newName warehouses = 
     let
         cmdForWarehouse existingWarehouse = 

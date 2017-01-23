@@ -13,7 +13,7 @@ import Components.Warehouses.Routing exposing (WarehouseRoute(..))
 view : WarehouseRoute -> WarehouseModel -> Html Msg
 view msg ({ form, errors, warehouse, warehouses } as model) =
     case msg of
-        WarehouseList    -> List.view warehouses
+        WarehouseList    -> List.view model
         WarehouseNew     -> New.view model
         WarehouseShow id -> warehouseEditPage warehouses id
 

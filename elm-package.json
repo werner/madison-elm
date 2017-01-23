@@ -15,6 +15,7 @@
         "etaque/elm-form": "1.0.0 <= v < 2.0.0",
         "evancz/elm-markdown": "3.0.1 <= v < 4.0.0",
         "evancz/url-parser": "2.0.1 <= v < 3.0.0",
+        "krisajenkins/elm-dialog": "4.0.2 <= v < 5.0.0",
         "rtfeldman/elm-css": "7.0.0 <= v < 8.0.0",
         "rtfeldman/elm-css-helpers": "2.0.1 <= v < 3.0.0"
     },
