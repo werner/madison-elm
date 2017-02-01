@@ -11,6 +11,7 @@ import Update exposing (update)
 import View exposing (view)
 
 import Ports.LocalStorage exposing (..)
+import Components.Warehouses.Subscriptions as WarehousesSub exposing (subscriptions)
 
 init : Location -> ( Model, Cmd Msg )
 init location =
@@ -24,6 +25,7 @@ subscriptions model =
     Sub.batch
       [ 
         loadStorage LoadLocalStorage
+      , Sub.map WarehousesMsg <| WarehousesSub.subscriptions model.warehouseModel
       ]
 
 main : Program Never Model Msg

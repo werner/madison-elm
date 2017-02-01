@@ -3,6 +3,8 @@ module Components.Warehouses.Models exposing (..)
 import Form exposing (Form)
 import Translations.Utils exposing (TranslationId(..))
 import Form.Validate as Validate exposing (..)
+import Diyalog exposing (..)
+import Diyalog.Message exposing (..)
 
 type alias WarehouseId = String
 
@@ -11,11 +13,12 @@ type alias Warehouse =
     , name   : String
     , stock  : Maybe Float }
 
-type alias WarehouseModel =
+type alias WarehouseModel msg =
     { form       : Form TranslationId Warehouse
     , errors     : List TranslationId 
     , warehouse  : Warehouse
     , warehouses : List Warehouse
+    , modalForm  : Diyalog.Model msg
     }
 
 new : Warehouse
@@ -33,3 +36,10 @@ validate =
         (field "name" string)
         (field "stock" (maybe float))
 
+initialModel : (Diyalog.Message.Msg -> msg) -> WarehouseModel msg
+initialModel msg = WarehouseModel
+                       (Form.initial [] validate)
+                       []
+                       (Warehouse Nothing "" Nothing)
+                       []
+                       (Diyalog.initial msg)

@@ -6,58 +6,63 @@ import Html.Attributes as Attr
 import Form exposing (Form, FieldState)
 import Html.Events exposing (onInput, onClick)
 import Form.Input as Input
+import Diyalog.Message exposing (..)
 
 import MainCss     exposing (..)
 import ViewHelpers exposing (..)
-import Components.Warehouses.Messages exposing (Msg(..))
+import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models exposing (WarehouseModel)
 import Components.Warehouses.Css exposing (..)
 
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : WarehouseModel -> Html Msg
-view model = card model
+view : Html msg -> Html msg
+view body = 
+    div [ Attr.class "modal-body" ]
+        [ body ]
 
-card : WarehouseModel -> Html Msg
-card ({ form, errors, warehouse, warehouses } as model) = 
-      div [ Attr.class "container" ]
-          [ div [ Attr.class "row" ]
-              [ div [ Attr.class "col s12 l6 offset-l3" ] 
-                    [ div [ Attr.class "card-panel" ] 
-                          [ div [ Attr.class "row center valign-wrapper" ]
-                                [ div [ Attr.class "left"]   [ img [ Attr.src "static/img/logo-nav.png" ] [] ]
-                                , div [ class [ TitleNav ] ] [ div [ Attr.class "col s12 l12" ] 
-                                                                   [ h4 [] [ text "New Warehouse" ] ] 
-                                                             ]
-                                , div [ Attr.class "col s2 l2" ]
-                                      [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                                               , onClick ShowWarehouses ] 
-                                               [ i [ Attr.class "fa fa-long-arrow-left" ] [] 
-                                               ]
-                                      ] 
-                                
-                                ]
-                          , Html.map FormMsg (formWarehouse model) 
-                          ] 
-                    ] 
-              ]
-          ]
+header : WarehouseModel WarehouseMsg.Msg -> String -> Html WarehouseMsg.Msg
+header ({ form, errors, warehouse, warehouses } as model) header = 
+      div [ Attr.class "modal-header" ] 
+          [ button [ Attr.class "btn-flat"
+                   , Attr.style [("float", "right")]
+                   , onClick  <| DiyalogMsg CloseModal ] 
+                   [ text "x" ]
+          , div [ Attr.class "modal-title" ]
+                [ div [ Attr.class "left" ] 
+                      [ img [ Attr.src "static/img/logo-nav.png" ] [] ]
+                , div [ class [ TitleNav ] ] [ div [ Attr.class "col s12 l12" ] 
+                                                   [ h4 [] [ text header ] ] 
+                                             ]
+                ]
+          ] 
 
-formWarehouse : WarehouseModel -> Html Form.Msg
-formWarehouse ({ form, errors, warehouse, warehouses } as model) =
-    div [ ]
-        [ div [ Attr.class "row" ] (showErrors errors)
-        , div [ Attr.class "row" ]
-              [ div [ Attr.class "col s10 l10" ] (inputForm Input.textInput "name" "Name" form)
-              , div [ Attr.class "col s2 l2" ]
-                    [ button [ class [ WarehouseSave ]
-                             , Attr.class "btn waves-effect waves-light right"
-                                 , onClick Form.Submit ] 
-                             [ i [ class [ WarehouseIcon ]
-                                 , Attr.class "material-icons" ] 
-                                 [ text "done" ] 
-                             ]
-                    ]
-              ]
-        ]
+body : WarehouseModel WarehouseMsg.Msg -> Html WarehouseMsg.Msg
+body ({ form, errors, warehouse, warehouses } as model) =
+    Html.map FormMsg <|
+        div []
+            [ div [ Attr.class "row" ] (showErrors errors)
+            , div [ Attr.class "row" ]
+                  [ div [ Attr.class "col s10 l10" ] (inputForm Input.textInput "name" "Name" form)
+                  , div [ Attr.class "col s2 l2" ]
+                        [ button [ class [ WarehouseSave ]
+                                 , Attr.class "btn waves-effect waves-light right"
+                                     , onClick Form.Submit ] 
+                                 [ i [ class [ WarehouseIcon ]
+                                     , Attr.class "material-icons" ] 
+                                     [ text "done" ] 
+                                 ]
+                        ]
+                  ]
+            ]
+
+footer : Html WarehouseMsg.Msg
+footer = 
+    div [ Attr.class "modal-footer" ]
+        [ button [ Attr.class "modal-action modal-close waves-effect waves-green btn-flat"
+                 , onClick <| DiyalogMsg CloseModal ]
+                 [ text "Cancel" ]
+        , button [ Attr.class "modal-action modal-close waves-effect waves-green btn-flat" 
+                 , onClick <| DiyalogMsg OkModal ] 
+                 [ text "Ok" ] ]

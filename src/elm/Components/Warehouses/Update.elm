@@ -1,14 +1,17 @@
 module Components.Warehouses.Update exposing (..)
 
 import Form exposing (Form)
+import Html.Attributes exposing (class)
 
 import Components.Warehouses.Messages exposing (Msg(..))
 import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
 import Components.Warehouses.Commands exposing (save)
+import Components.Warehouses.New exposing (view, header, body, footer)
 import Navigation
+import Diyalog
 
-update : Msg -> WarehouseModel -> ( WarehouseModel, Cmd Msg )
-update message ({ form, errors, warehouse, warehouses } as model) =
+update : Msg -> WarehouseModel Msg -> ( WarehouseModel Msg, Cmd Msg )
+update message ({ form, errors, warehouse, warehouses, modalForm } as model) =
     case message of
         OnFetchAll (Ok newWarehouses) ->
             ( { model | warehouses = newWarehouses }, Cmd.none )
@@ -22,8 +25,16 @@ update message ({ form, errors, warehouse, warehouses } as model) =
         ShowWarehouse id ->
             ( model, Navigation.newUrl ("#warehouses/" ++ Maybe.withDefault "" id) )
 
-        GotoNewWarehouse ->
-            ( model, Navigation.newUrl ("#warehouses/new") )
+        DiyalogMsg diyalogMsg ->
+            let (updateModal, cmd) = Diyalog.update diyalogMsg { modalForm | headerTitle = "New Warehouse"
+                                                                           , fullHeader = header model
+                                                                           , body = body model
+                                                                           , mainModalCss = class "modal"
+                                                                           , modalContentCss = class "modal-content"
+                                                                           , fullBody = view 
+                                                                           , fullFooter = footer }
+            in
+                ( { model | modalForm = updateModal }, Cmd.none )
 
         ChangeWarehouse id name ->
             ( model, changeWarehouse id name warehouses |> Cmd.batch )

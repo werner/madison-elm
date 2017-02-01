@@ -2,9 +2,11 @@ module Components.Warehouses.List exposing (..)
 
 import Html exposing (..)
 import Html.Attributes as Attr
-import Components.Warehouses.Messages exposing (..)
-import Components.Warehouses.Models exposing (Warehouse)
+import Components.Warehouses.Messages as WarehouseMsg exposing (..)
+import Components.Warehouses.Models exposing (WarehouseModel, Warehouse)
 import Html.Events exposing (onClick)
+import Diyalog
+import Diyalog.Message as DiyalgMsg exposing (..)
 
 import MainCss exposing (..)
 
@@ -13,13 +15,13 @@ import Html.CssHelpers
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : List Warehouse -> Html Msg
-view warehouses = 
+view : WarehouseModel WarehouseMsg.Msg -> Html WarehouseMsg.Msg
+view model = 
     div []
-        [ list warehouses]
+        [ list model ]
 
-list : List Warehouse -> Html Msg
-list warehouses = 
+list : WarehouseModel WarehouseMsg.Msg -> Html WarehouseMsg.Msg
+list ({ warehouses, modalForm } as model) = 
     div [ Attr.class "container" ]
         [ div [ Attr.class "row" ]
               [ div [ Attr.class "col s12 l12" ]
@@ -44,17 +46,18 @@ list warehouses =
                               ]
                           , div [ Attr.class "row" ]
                                 [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                                         , onClick GotoNewWarehouse ] 
+                                         , onClick <| DiyalogMsg DiyalgMsg.ShowingModal ] 
                                          [ i [ Attr.class "material-icons" ] 
                                              [ text "add" ]
                                          ]
                                 ]
                           ] 
                     ]
+              , Diyalog.view DiyalogMsg modalForm
               ]
         ]
 
-warehouseRow : Warehouse -> Html Msg
+warehouseRow : Warehouse -> Html WarehouseMsg.Msg
 warehouseRow warehouse = 
     tr []
        [ td [] [ text (Maybe.withDefault "" warehouse.id) ]
@@ -63,7 +66,7 @@ warehouseRow warehouse =
        , td [] [ editBtn warehouse ]
        ]
 
-editBtn : Warehouse -> Html Msg
+editBtn : Warehouse -> Html WarehouseMsg.Msg
 editBtn warehouse =
     button
         [ Attr.class "btn regular" 
