@@ -12,7 +12,6 @@ import MainCss     exposing (..)
 import ViewHelpers exposing (..)
 import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models exposing (WarehouseModel)
-import Components.Warehouses.Css exposing (..)
 
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
@@ -44,17 +43,7 @@ body ({ form, errors, warehouse, warehouses } as model) =
         div []
             [ div [ Attr.class "row" ] (showErrors errors)
             , div [ Attr.class "row" ]
-                  [ div [ Attr.class "col s10 l10" ] (inputForm Input.textInput "name" "Name" form)
-                  , div [ Attr.class "col s2 l2" ]
-                        [ button [ class [ WarehouseSave ]
-                                 , Attr.class "btn waves-effect waves-light right"
-                                     , onClick Form.Submit ] 
-                                 [ i [ class [ WarehouseIcon ]
-                                     , Attr.class "material-icons" ] 
-                                     [ text "done" ] 
-                                 ]
-                        ]
-                  ]
+                  [ div [ Attr.class "col s10 l10" ] (inputForm Input.textInput "name" "Name" form) ]
             ]
 
 footer : Html WarehouseMsg.Msg
@@ -64,5 +53,5 @@ footer =
                  , onClick <| DiyalogMsg CloseModal ]
                  [ text "Cancel" ]
         , button [ Attr.class "modal-action modal-close waves-effect waves-green btn-flat" 
-                 , onClick <| DiyalogMsg OkModal ] 
+                 , onClick <| FormMsg Form.Submit ] 
                  [ text "Ok" ] ]

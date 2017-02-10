@@ -3,14 +3,15 @@ module Components.Warehouses.Update exposing (..)
 import Form exposing (Form)
 import Html.Attributes exposing (class)
 
-import Components.Warehouses.Messages exposing (Msg(..))
+import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
 import Components.Warehouses.Commands exposing (save)
 import Components.Warehouses.New exposing (view, header, body, footer)
 import Navigation
 import Diyalog
+import Diyalog.Message as DiyalogMsg exposing (..)
 
-update : Msg -> WarehouseModel Msg -> ( WarehouseModel Msg, Cmd Msg )
+update : WarehouseMsg.Msg -> WarehouseModel WarehouseMsg.Msg -> ( WarehouseModel WarehouseMsg.Msg, Cmd WarehouseMsg.Msg )
 update message ({ form, errors, warehouse, warehouses, modalForm } as model) =
     case message of
         OnFetchAll (Ok newWarehouses) ->
@@ -42,7 +43,9 @@ update message ({ form, errors, warehouse, warehouses, modalForm } as model) =
         FormMsg formMsg ->
             case ( formMsg, Form.getOutput form ) of
                 ( Form.Submit, Just warehouse ) ->
-                    ( model, Cmd.none )
+                    let (updateModal, cmd) = Diyalog.update DiyalogMsg.OkModal modalForm
+                    in
+                    ( { model | modalForm = updateModal }, Cmd.none )
 
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )
@@ -53,7 +56,7 @@ update message ({ form, errors, warehouse, warehouses, modalForm } as model) =
         OnSave (Err error) ->
             ( model, Cmd.none )
 
-changeWarehouse : Maybe WarehouseId -> String -> List Warehouse -> List (Cmd Msg)
+changeWarehouse : Maybe WarehouseId -> String -> List Warehouse -> List (Cmd WarehouseMsg.Msg)
 changeWarehouse warehouseId newName warehouses = 
     let
         cmdForWarehouse existingWarehouse = 
