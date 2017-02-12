@@ -10,6 +10,7 @@ type TranslationId
     = ErrInvalidEmail
     | PasswordNotMatch
     | ErrEmpty
+    | ErrInvalidString
     | HttpError String
 
 type Language 
@@ -29,6 +30,9 @@ translate lang trans =
 
         ErrEmpty ->
           TranslationSet "Can't be blank" "No puede quedar en blanco"
+
+        ErrInvalidString ->
+          TranslationSet "Invalid String" "Cadena de texto inválida"
 
         HttpError err ->
           TranslationSet err err

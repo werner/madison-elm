@@ -13,6 +13,9 @@ translateError error =
         Empty ->
             translate English ErrEmpty
 
+        InvalidString ->
+            translate English ErrInvalidString
+
         CustomError e ->
             case (toString e) of
                 "PasswordNotMatch" ->
