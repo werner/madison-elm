@@ -47,6 +47,12 @@ update msg model =
                 Routing.RegisterRoute -> ( model, Cmd.none )
                 Routing.LoginRoute    -> ( model, Cmd.none )
                 _                     ->
-                    case decodeString (at ["currentUser", "id"] string) object of
-                        Ok  obj -> ( model, Cmd.none )
-                        Err err -> ( { model | user = User "" "" },  Navigation.newUrl "#login" )
+                    case (decodeString getCurrentUser object) of
+                        Ok  obj -> ( { model | currentUser = CurrentUser obj.id obj.email }, Cmd.none )
+                        Err err -> ( { model | currentUser = CurrentUser "" "" },  Navigation.newUrl "#login" )
+
+getCurrentUser : Decoder CurrentUser
+getCurrentUser = 
+    map2 CurrentUser
+      (at ["currentUser", "id"] string)
+      (at ["currentUser", "email"] string)

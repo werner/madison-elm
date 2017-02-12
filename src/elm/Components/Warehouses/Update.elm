@@ -45,7 +45,7 @@ update message ({ form, errors, warehouse, warehouses, modalForm } as model) =
                 ( Form.Submit, Just warehouse ) ->
                     let (updateModal, cmd) = Diyalog.update DiyalogMsg.OkModal modalForm
                     in
-                    ( { model | modalForm = updateModal }, Cmd.none )
+                    ( { model | modalForm = updateModal }, save warehouse )
 
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )

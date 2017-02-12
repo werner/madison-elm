@@ -32,8 +32,9 @@ saveRequest warehouse =
     Http.request
         { body = memberEncoded warehouse |> Http.jsonBody
         , expect = Http.expectJson memberDecoder
-        , headers = []
-        , method = "PUT"
+        , headers = [ Http.header "Content-Type" "application/json"
+                    , Http.header "madison-auth" "application/json"]
+        , method = "POST"
         , timeout = Nothing
         , url = saveUrl (Maybe.withDefault "" warehouse.id)
         , withCredentials = False
