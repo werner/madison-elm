@@ -32,7 +32,7 @@ update msg model =
         WarehousesMsg subMsg ->
             let
                 ( updateWarehouses, cmd ) =
-                    Components.Warehouses.Update.update subMsg model.warehouseModel
+                    Components.Warehouses.Update.update model.currentUser.id subMsg model.warehouseModel
             in
                 ( { model | warehouseModel = updateWarehouses }, Cmd.map WarehousesMsg cmd )
 

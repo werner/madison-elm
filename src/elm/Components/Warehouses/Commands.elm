@@ -27,31 +27,29 @@ memberDecoder =
         (field "name"   Decode.string)
         (field "stock"  (Decode.maybe Decode.float))
 
-saveRequest : Warehouse -> Http.Request Warehouse
-saveRequest warehouse = 
+saveRequest : Warehouse -> String -> Http.Request Warehouse
+saveRequest warehouse token = 
     Http.request
         { body = memberEncoded warehouse |> Http.jsonBody
         , expect = Http.expectJson memberDecoder
-        , headers = [ Http.header "Content-Type" "application/json"
-                    , Http.header "madison-auth" "application/json"]
+        , headers = [ Http.header "Accept" "application/json"
+                    , Http.header "madison-auth" token]
         , method = "POST"
         , timeout = Nothing
         , url = saveUrl (Maybe.withDefault "" warehouse.id)
         , withCredentials = False
         }
 
-save : Warehouse -> Cmd Msg
-save warehouse =
-    saveRequest warehouse
+save : Warehouse -> String -> Cmd Msg
+save warehouse token =
+    saveRequest warehouse token
         |> Http.send OnSave
 
 memberEncoded : Warehouse -> Encode.Value
 memberEncoded warehouse =
     let
         list =
-            [ ( "id",     Encode.string (Maybe.withDefault "" warehouse.id) ) 
-            , ( "name",   Encode.string warehouse.name )
-            , ( "stock",  Encode.float (Maybe.withDefault 0.0 warehouse.stock) )]
+            [ ( "cwName",   Encode.string warehouse.name ) ]
     in
         list
             |> Encode.object
