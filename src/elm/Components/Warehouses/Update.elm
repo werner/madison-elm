@@ -5,7 +5,7 @@ import Html.Attributes exposing (class)
 
 import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
-import Components.Warehouses.Commands exposing (save)
+import Components.Warehouses.Commands exposing (save, fetchAll)
 import Components.Warehouses.New exposing (view, header, body, footer)
 import Navigation
 import Diyalog
@@ -21,8 +21,8 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
         OnFetchAll (Err error) ->
             ( model, Cmd.none )
 
-        ShowWarehouses ->
-            ( model, Navigation.newUrl "#warehouses" )
+        ShowWarehouses tok ->
+            ( model, fetchAll tok )
 
         ShowWarehouse id ->
             ( model, Navigation.newUrl ("#warehouses/" ++ Maybe.withDefault "" id) )

@@ -5,6 +5,7 @@ import Html.Attributes as Attr
 import Components.Warehouses.Messages as WarehouseMsg exposing (..)
 import Components.Warehouses.Models exposing (WarehouseModel, Warehouse)
 import Html.Events exposing (onClick)
+import ViewHelpers exposing (onLoadDiv)
 import Diyalog
 import Diyalog.Message as DiyalgMsg exposing (..)
 
@@ -15,9 +16,9 @@ import Html.CssHelpers
 { id, class, classList } =
     Html.CssHelpers.withNamespace "madison"
 
-view : WarehouseModel WarehouseMsg.Msg -> Html WarehouseMsg.Msg
-view model = 
-    div []
+view : String -> WarehouseModel WarehouseMsg.Msg -> Html WarehouseMsg.Msg
+view token model = 
+    div [ ]
         [ list model ]
 
 list : WarehouseModel WarehouseMsg.Msg -> Html WarehouseMsg.Msg
@@ -32,18 +33,7 @@ list ({ warehouses, modalForm } as model) =
                                       [ div  [] [ h4 [] [ text "Warehouses" ] ] ]
                                 ]
                           , div [ Attr.class "row" ] 
-                                [ table [] 
-                                [ thead []
-                                  [ tr []
-                                    [ th [] [ text "Id" ]
-                                    , th [] [ text "Name" ]
-                                    , th [] [ text "Stock"]
-                                    , th [] [ text "Actions"]
-                                    ]
-                                  ]
-                                , tbody [] (List.map warehouseRow warehouses)
-                                ]
-                              ]
+                                [ listWarehouses warehouses ]
                           , div [ Attr.class "row" ]
                                 [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
                                          , onClick <| DiyalogMsg DiyalgMsg.ShowingModal ] 
@@ -57,15 +47,18 @@ list ({ warehouses, modalForm } as model) =
               ]
         ]
 
+listWarehouses : List Warehouse -> Html WarehouseMsg.Msg
+listWarehouses warehouses = 
+    ul [ Attr.class "collection" ] <| List.map warehouseRow warehouses
+
 warehouseRow : Warehouse -> Html WarehouseMsg.Msg
 warehouseRow warehouse = 
-    tr []
-       [ td [] [ text (Maybe.withDefault "" warehouse.id) ]
-       , td [] [ text warehouse.name] 
-       , td [] [ text (toString (Maybe.withDefault 0.0 warehouse.stock)) ]
-       , td [] [ editBtn warehouse ]
+    li [ Attr.class "collection-item avatar" ]
+       [ img  [ Attr.src "static/img/logo-nav.png", Attr.class "circle" ] [] 
+       , span [ Attr.class "title" ] [ text "Title" ]
+       , p    [ ] [ text "First Line"]
        ]
-
+   
 editBtn : Warehouse -> Html WarehouseMsg.Msg
 editBtn warehouse =
     button

@@ -24,8 +24,8 @@ page model =
         RegisterRoute ->
             Html.map RegisterMsg (Components.Register.Form.view model.regUser)
 
-        WarehouseRoutes a ->
-            Html.map WarehousesMsg (Components.Warehouses.View.view a model.warehouseModel)
+        WarehouseRoutes msg ->
+            Html.map WarehousesMsg (Components.Warehouses.View.view model.currentUser.id msg model.warehouseModel)
 
         NotFoundRoute ->
             notFoundView

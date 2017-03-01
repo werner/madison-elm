@@ -10,10 +10,10 @@ import Components.Warehouses.Edit as Edit exposing (view)
 import Components.Warehouses.New  as New exposing (view)
 import Components.Warehouses.Routing exposing (WarehouseRoute(..))
 
-view : WarehouseRoute -> WarehouseModel Msg -> Html Msg
-view msg ({ form, errors, warehouse, warehouses } as model) =
+view : String -> WarehouseRoute -> WarehouseModel Msg -> Html Msg
+view token msg ({ form, errors, warehouse, warehouses } as model) =
     case msg of
-        WarehouseList    -> List.view model
+        WarehouseList    -> List.view token model
         WarehouseNew     -> New.view <| New.body model
         WarehouseShow id -> warehouseEditPage warehouses id
 

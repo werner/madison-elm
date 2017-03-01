@@ -48,3 +48,7 @@ notFoundView : Html msg
 notFoundView = 
     div []
         [ text "Url not found" ]
+
+onLoadDiv : msg -> Attribute msg
+onLoadDiv message =
+  on "load" (Json.succeed message)

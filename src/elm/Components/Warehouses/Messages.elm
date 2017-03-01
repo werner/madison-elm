@@ -6,7 +6,7 @@ import Diyalog.Message
 import Components.Warehouses.Models exposing ( WarehouseId, Warehouse )
 
 type Msg = OnFetchAll (Result Http.Error (List Warehouse))
-         | ShowWarehouses
+         | ShowWarehouses String
          | ShowWarehouse (Maybe WarehouseId)
          | ChangeWarehouse (Maybe WarehouseId) String
          | OnSave (Result Http.Error Warehouse)
