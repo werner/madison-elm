@@ -10,5 +10,5 @@ type WarehouseRoute = WarehouseList
 matcherWarehouse : (WarehouseRoute -> b) -> List (Parser (b -> c) c)
 matcherWarehouse route = [ map (route WarehouseList) (s "warehouses")
                          , map (route WarehouseNew) (s "warehouses" </> s "new")
-                         , map (\x -> route (WarehouseShow x)) (s "warehouses" </> string </> s "edit")
+                         , map (\x -> route (WarehouseShow x)) (s "warehouses" </> int </> s "edit")
                          ]

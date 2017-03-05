@@ -5,7 +5,6 @@ import Html.Attributes as Attr
 import Components.Warehouses.Messages as WarehouseMsg exposing (..)
 import Components.Warehouses.Models exposing (WarehouseModel, Warehouse)
 import Html.Events exposing (onClick)
-import ViewHelpers exposing (onLoadDiv)
 import Diyalog
 import Diyalog.Message as DiyalgMsg exposing (..)
 
@@ -55,8 +54,9 @@ warehouseRow : Warehouse -> Html WarehouseMsg.Msg
 warehouseRow warehouse = 
     li [ Attr.class "collection-item avatar" ]
        [ img  [ Attr.src "static/img/logo-nav.png", Attr.class "circle" ] [] 
-       , span [ Attr.class "title" ] [ text "Title" ]
-       , p    [ ] [ text "First Line"]
+       , span [ Attr.class "title" ] [ text warehouse.name ]
+       , p    [ ] [ strong [] [ text "Stock: " ]
+                  , text <| toString <| Maybe.withDefault 0.0 warehouse.stock ]
        ]
    
 editBtn : Warehouse -> Html WarehouseMsg.Msg

@@ -25,7 +25,7 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
             ( model, fetchAll tok )
 
         ShowWarehouse id ->
-            ( model, Navigation.newUrl ("#warehouses/" ++ Maybe.withDefault "" id) )
+            ( model, Navigation.newUrl <| "#warehouses/" ++ (toString <| Maybe.withDefault 0 id) )
 
         DiyalogMsg diyalogMsg ->
             let (updateModal, cmd) = Diyalog.update diyalogMsg { modalForm | headerTitle = "New Warehouse"

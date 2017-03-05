@@ -6,7 +6,7 @@ import Form.Validate as Validate exposing (..)
 import Diyalog exposing (..)
 import Diyalog.Message exposing (..)
 
-type alias WarehouseId = String
+type alias WarehouseId = Int
 
 type alias Warehouse = 
     { id     : Maybe WarehouseId
@@ -32,7 +32,7 @@ new =
 validate : Validation TranslationId Warehouse
 validate = 
     map3 Warehouse 
-        (field "id" (maybe string))
+        (field "id" (maybe int))
         (field "name" string)
         (field "stock" (maybe float))
 
