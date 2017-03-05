@@ -9,6 +9,7 @@ import Diyalog
 import Diyalog.Message as DiyalgMsg exposing (..)
 
 import MainCss exposing (..)
+import Components.Warehouses.Css exposing (..)
 
 import Html.CssHelpers
 
@@ -53,9 +54,11 @@ listWarehouses warehouses =
 warehouseRow : Warehouse -> Html WarehouseMsg.Msg
 warehouseRow warehouse = 
     li [ Attr.class "collection-item avatar" ]
-       [ img  [ Attr.src "static/img/logo-nav.png", Attr.class "circle" ] [] 
-       , span [ Attr.class "title" ] [ text warehouse.name ]
-       ]
+       [ img  [ Attr.src "static/img/box_small.png", class [ WarehouseIcon ] ] [] 
+       , span [ Attr.class "title", class [ WarehouseName ] ] [ strong [] [ text "Name: " ]
+                                                              , text warehouse.name ]
+       , a [ Attr.class "secondary-content"
+           , Attr.href "#" ] [ text "Edit" ] ]
    
 editBtn : Warehouse -> Html WarehouseMsg.Msg
 editBtn warehouse =
