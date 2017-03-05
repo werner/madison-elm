@@ -30,9 +30,7 @@ formLevel warehouse =
         ]
         [ div [ class "col col-5" ] [ text "Level" ]
         , div [ class "col col-7" ]
-            [ span [ class "h2 bold" ] [ text (toString warehouse.stock) ]
-            , btnSave warehouse
-            ]
+            [ btnSave warehouse ]
         ]
 
 

@@ -55,8 +55,6 @@ warehouseRow warehouse =
     li [ Attr.class "collection-item avatar" ]
        [ img  [ Attr.src "static/img/logo-nav.png", Attr.class "circle" ] [] 
        , span [ Attr.class "title" ] [ text warehouse.name ]
-       , p    [ ] [ strong [] [ text "Stock: " ]
-                  , text <| toString <| Maybe.withDefault 0.0 warehouse.stock ]
        ]
    
 editBtn : Warehouse -> Html WarehouseMsg.Msg

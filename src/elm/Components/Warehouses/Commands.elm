@@ -35,10 +35,9 @@ collectionDecoder = Decode.list memberDecoder
 
 memberDecoder : Decode.Decoder Warehouse
 memberDecoder =
-    Decode.map3 Warehouse
+    Decode.map2 Warehouse
         (field "wId"     (Decode.maybe Decode.int))
         (field "wName"   Decode.string)
-        (field "wStock"  (Decode.maybe Decode.float))
 
 saveRequest : Warehouse -> String -> Http.Request Warehouse
 saveRequest warehouse token = 

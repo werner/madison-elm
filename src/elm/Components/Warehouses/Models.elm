@@ -11,7 +11,7 @@ type alias WarehouseId = Int
 type alias Warehouse = 
     { id     : Maybe WarehouseId
     , name   : String
-    , stock  : Maybe Float }
+    }
 
 type alias WarehouseModel msg =
     { form       : Form TranslationId Warehouse
@@ -26,20 +26,18 @@ new =
     {
       id     = Nothing
     , name   = ""
-    , stock  = Nothing
     }
 
 validate : Validation TranslationId Warehouse
 validate = 
-    map3 Warehouse 
+    map2 Warehouse 
         (field "id" (maybe int))
         (field "name" string)
-        (field "stock" (maybe float))
 
 initialModel : (Diyalog.Message.Msg -> msg) -> WarehouseModel msg
 initialModel msg = WarehouseModel
                        (Form.initial [] validate)
                        []
-                       (Warehouse Nothing "" Nothing)
+                       (Warehouse Nothing "")
                        []
                        (Diyalog.initial msg)
