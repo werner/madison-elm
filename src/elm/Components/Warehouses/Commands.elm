@@ -28,7 +28,10 @@ fetchAllUrl : String
 fetchAllUrl = "http://localhost:9090/warehouses?sortField=name-asc&sortField=id-asc&limit=10&offset=0"
 
 saveUrl : Int -> String
-saveUrl warehouseId = "http://localhost:9090/warehouses/" ++ toString warehouseId
+saveUrl warehouseId = 
+    case warehouseId of 
+        0 -> "http://localhost:9090/warehouses/"
+        _ -> "http://localhost:9090/warehouses/" ++ toString warehouseId
 
 collectionDecoder : Decode.Decoder (List Warehouse)
 collectionDecoder = Decode.list memberDecoder
@@ -39,11 +42,11 @@ memberDecoder =
         (field "wId"     (Decode.maybe Decode.int))
         (field "wName"   Decode.string)
 
-saveRequest : Warehouse -> String -> Http.Request Warehouse
+saveRequest : Warehouse -> String -> Http.Request ()
 saveRequest warehouse token = 
     Http.request
         { body = memberEncoded warehouse |> Http.jsonBody
-        , expect = Http.expectJson memberDecoder
+        , expect = Http.expectStringResponse (\_ -> Ok ())
         , headers = [ Http.header "Accept" "application/json"
                     , Http.header "madison-auth" token]
         , method = "POST"
@@ -55,7 +58,7 @@ saveRequest warehouse token =
 save : Warehouse -> String -> Cmd Msg
 save warehouse token =
     saveRequest warehouse token
-        |> Http.send OnSave
+        |> Http.send ( OnSave token )
 
 memberEncoded : Warehouse -> Encode.Value
 memberEncoded warehouse =

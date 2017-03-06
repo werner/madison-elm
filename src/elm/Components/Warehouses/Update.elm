@@ -51,10 +51,10 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )
 
-        OnSave (Ok updatedWarehouse) ->
-            ( { model | warehouses = updateWarehouse updatedWarehouse warehouses }, Cmd.none )
+        OnSave tok (Ok updatedWarehouse) ->
+            ( model, fetchAll tok )
 
-        OnSave (Err error) ->
+        OnSave tok (Err error) ->
             ( model, Cmd.none )
 
 changeWarehouse : String -> Maybe WarehouseId -> String -> List Warehouse -> List (Cmd WarehouseMsg.Msg)
@@ -67,14 +67,3 @@ changeWarehouse token warehouseId newName warehouses =
                 Cmd.none
     in
         List.map cmdForWarehouse warehouses
-
-updateWarehouse : Warehouse -> List Warehouse -> List Warehouse
-updateWarehouse updatedWarehouse warehouses = 
-    let
-        select existingWarehouse =
-            if existingWarehouse.id == updatedWarehouse.id then
-                updatedWarehouse
-            else
-                existingWarehouse
-    in
-        List.map select warehouses

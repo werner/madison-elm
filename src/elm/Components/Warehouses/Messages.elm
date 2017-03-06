@@ -9,6 +9,6 @@ type Msg = OnFetchAll (Result Http.Error (List Warehouse))
          | ShowWarehouses String
          | ShowWarehouse (Maybe WarehouseId)
          | ChangeWarehouse (Maybe WarehouseId) String
-         | OnSave (Result Http.Error Warehouse)
+         | OnSave String (Result Http.Error ())
          | FormMsg Form.Msg
          | DiyalogMsg Diyalog.Message.Msg
