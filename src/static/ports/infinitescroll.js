@@ -25,8 +25,18 @@ require('./storage.js');
       fullItem[storageKey] = value;
       app.ports.loadScrollAction.send(JSON.stringify(fullItem));
     }
-
   };
+
+  InfiniteScroll.prototype.loadAction = function(collectionClassName, app) {
+    var self = this;
+    var wrapper = document.getElementsByClassName(collectionClassName)[0];
+    var lastItem = wrapper.childNodes[wrapper.childNodes.length - 1];
+
+    if (self.isElementInViewport(lastItem) && lastItem.dataset.isLastItem === undefined) {
+      lastItem.dataset.isLastItem = true;
+      self.lastItem('currentUser', app);
+    }
+  }
 
   window.InfiniteScroll = InfiniteScroll;
 
