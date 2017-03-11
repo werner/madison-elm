@@ -10,3 +10,4 @@ type Msg = WarehousesMsg Components.Warehouses.Messages.Msg
          | RegisterMsg Components.Register.Messages.Msg
          | OnLocationChange Location
          | LoadLocalStorage String
+         | LoadScrollAction String

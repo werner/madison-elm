@@ -54,6 +54,11 @@ update msg model =
                                    , routeCommand model.route obj )
                         Err err -> ( { model | currentUser = CurrentUser "" "" },  Navigation.newUrl "#login" )
 
+        LoadScrollAction object ->
+            case (decodeString getCurrentUser object) of
+                Ok  obj -> ( { model | currentUser = CurrentUser obj.id obj.email } , routeCommand model.route obj )
+                Err obj -> ( model, Cmd.none )
+
 -- This is mainly used for a command that needs to be run after the 
 -- localstorage for currentUser is read
 routeCommand : Routing.Route -> CurrentUser -> Cmd Msg
