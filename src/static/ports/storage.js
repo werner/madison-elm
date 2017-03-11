@@ -3,6 +3,21 @@
 
   function Storage(){};
 
+  Storage.prototype.init = function(app) {
+    var self = this;
+  
+    app.ports.doloadStorage.subscribe(function(storageKey) {
+      self.loadFromStorage(storageKey, app);
+    });
+
+    app.ports.saveStorage.subscribe(function(args) {
+      var [storageObject, isLocalStorage] = args;
+      Object.keys(storageObject).forEach(function (key) {
+        self.getStorageType(isLocalStorage).setItem(key, JSON.stringify(storageObject[key]));
+      });
+    });
+  }
+
   Storage.prototype.loadFromStorage = function(storageKey, app) {
     var value = this.getValueFromStorage(storageKey);
     var fullItem = {};
