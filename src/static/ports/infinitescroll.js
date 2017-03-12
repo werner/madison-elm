@@ -5,7 +5,13 @@ require('./storage.js');
 
   function InfiniteScroll(){};
 
+  InfiniteScroll.prototype.partialOffSet = 0;
+
   InfiniteScroll.prototype.isElementInViewport = function(el) {
+    if (el === undefined) {
+      return false;
+    }
+
     var rect = el.getBoundingClientRect();
 
     return (
@@ -16,14 +22,14 @@ require('./storage.js');
     );
   };
 
-  InfiniteScroll.prototype.lastItem = function(storageKey, app) {
+  InfiniteScroll.prototype.lastItem = function(storageKey, offset, app) {
     var storage = new Storage();
     var value = storage.getValueFromStorage(storageKey);
 
     var fullItem = {};
     if (value !== null) {
       fullItem[storageKey] = value;
-      app.ports.loadScrollAction.send(JSON.stringify(fullItem));
+      app.ports.loadScrollAction.send([JSON.stringify(fullItem), offset]);
     }
   };
 
@@ -34,7 +40,9 @@ require('./storage.js');
 
     if (self.isElementInViewport(lastItem) && lastItem.dataset.isLastItem === undefined) {
       lastItem.dataset.isLastItem = true;
-      self.lastItem('currentUser', app);
+      self.partialOffSet += 1;
+      var finalOffset = self.partialOffSet * 10;
+      self.lastItem('currentUser', finalOffset, app);
     }
   }
 

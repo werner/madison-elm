@@ -6,13 +6,13 @@ import Json.Encode as Encode
 import Components.Warehouses.Models exposing (WarehouseId, Warehouse)
 import Components.Warehouses.Messages exposing (..)
 
-fetchAll : String -> Cmd Msg
-fetchAll token = 
-    getAllRequest token 
+fetchAll : String -> Int -> Cmd Msg
+fetchAll token offset = 
+    getAllRequest token offset
         |> Http.send OnFetchAll
 
-getAllRequest : String -> Http.Request (List Warehouse)
-getAllRequest token = 
+getAllRequest : String -> Int -> Http.Request (List Warehouse)
+getAllRequest token offset = 
     Http.request
         { body = Http.jsonBody filterEncoded
         , expect = Http.expectJson collectionDecoder
@@ -20,12 +20,12 @@ getAllRequest token =
                     , Http.header "madison-auth" token]
         , method = "GET"
         , timeout = Nothing
-        , url = fetchAllUrl
+        , url = fetchAllUrl offset
         , withCredentials = False
         }
 
-fetchAllUrl : String
-fetchAllUrl = "http://localhost:9090/warehouses?sortField=name-asc&sortField=id-asc&limit=10&offset=0"
+fetchAllUrl : Int -> String
+fetchAllUrl offset = "http://localhost:9090/warehouses?sortField=id-asc&sortField=id-asc&limit=10&offset=" ++ (toString offset)
 
 saveUrl : Int -> String
 saveUrl warehouseId = 

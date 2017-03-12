@@ -16,13 +16,13 @@ update : String -> WarehouseMsg.Msg -> WarehouseModel WarehouseMsg.Msg ->
 update token message ({ form, errors, warehouse, warehouses, modalForm } as model) =
     case message of
         OnFetchAll (Ok newWarehouses) ->
-            ( { model | warehouses = newWarehouses }, Cmd.none )
+            ( { model | warehouses = warehouses ++ newWarehouses }, Cmd.none )
  
         OnFetchAll (Err error) ->
             ( model, Cmd.none )
 
-        ShowWarehouses tok ->
-            ( model, fetchAll tok )
+        ShowWarehouses tok offset ->
+            ( model, fetchAll tok offset )
 
         ShowWarehouse id ->
             ( model, Navigation.newUrl <| "#warehouses/" ++ (toString <| Maybe.withDefault 0 id) )
@@ -52,7 +52,7 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
                     ( { model | form = Form.update formMsg form }, Cmd.none )
 
         OnSave tok (Ok updatedWarehouse) ->
-            ( model, fetchAll tok )
+            ( model, fetchAll tok 0 )
 
         OnSave tok (Err error) ->
             ( model, Cmd.none )

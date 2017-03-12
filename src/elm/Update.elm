@@ -51,20 +51,20 @@ update msg model =
                 _                     ->
                     case (decodeString getCurrentUser object) of
                         Ok  obj -> ( { model | currentUser = CurrentUser obj.id obj.email }
-                                   , routeCommand model.route obj )
+                                   , routeCommand model.route obj 0)
                         Err err -> ( { model | currentUser = CurrentUser "" "" },  Navigation.newUrl "#login" )
 
-        LoadScrollAction object ->
+        LoadScrollAction (object, offset) ->
             case (decodeString getCurrentUser object) of
-                Ok  obj -> ( { model | currentUser = CurrentUser obj.id obj.email } , routeCommand model.route obj )
+                Ok  obj -> ( { model | currentUser = CurrentUser obj.id obj.email } , routeCommand model.route obj offset )
                 Err obj -> ( model, Cmd.none )
 
 -- This is mainly used for a command that needs to be run after the 
 -- localstorage for currentUser is read
-routeCommand : Routing.Route -> CurrentUser -> Cmd Msg
-routeCommand route obj = 
+routeCommand : Routing.Route -> CurrentUser -> Int -> Cmd Msg
+routeCommand route obj offset = 
     case route of
-        Routing.WarehouseRoutes warehouseRoute -> Cmd.map WarehousesMsg <| fetchAll obj.id
+        Routing.WarehouseRoutes warehouseRoute -> Cmd.map WarehousesMsg <| fetchAll obj.id offset
         _                                      -> Cmd.none
 
 getCurrentUser : Decoder CurrentUser

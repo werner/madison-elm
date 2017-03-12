@@ -43,5 +43,5 @@ listBtn : Html Msg
 listBtn = 
     button
         [ class "btn regular" 
-        , onClick <| ShowWarehouses "" ]
+        , onClick <| ShowWarehouses "" 0]
         [ i [ class "fa fa-chevron-left mr1" ] [], text "List" ]

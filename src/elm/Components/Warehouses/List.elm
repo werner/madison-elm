@@ -55,6 +55,9 @@ warehouseRow : Warehouse -> Html WarehouseMsg.Msg
 warehouseRow warehouse = 
     li [ Attr.class "collection-item avatar" ]
        [ img  [ Attr.src "static/img/box_small.png", class [ WarehouseIcon ] ] [] 
+       , span [ Attr.class "title", class [ WarehouseName ] ] [ strong [] [ text "ID:" ] 
+                                                              , text ( toString <| Maybe.withDefault 0 warehouse.id ) ]
+       , br [] []
        , span [ Attr.class "title", class [ WarehouseName ] ] [ strong [] [ text "Name: " ]
                                                               , text warehouse.name ]
        , a [ Attr.class "secondary-content"
