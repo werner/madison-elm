@@ -17,6 +17,7 @@ var storage = new Storage();
 var infiniteScroll = new InfiniteScroll();
 
 storage.init(app);
+infiniteScroll.init(app);
 
 window.onscroll = function () {
   infiniteScroll.loadAction('collection', app);

@@ -7,6 +7,14 @@ require('./storage.js');
 
   InfiniteScroll.prototype.partialOffSet = 0;
 
+  InfiniteScroll.prototype.init = function(app) {
+    var self = this;
+
+    app.ports.initializeOffset.subscribe(function() {
+      self.partialOffSet = 0;
+    });
+  }
+
   InfiniteScroll.prototype.isElementInViewport = function(el) {
     if (el === undefined) {
       return false;

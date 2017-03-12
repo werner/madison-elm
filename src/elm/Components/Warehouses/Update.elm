@@ -2,6 +2,7 @@ module Components.Warehouses.Update exposing (..)
 
 import Form exposing (Form)
 import Html.Attributes exposing (class)
+import Ports.InfiniteScroll exposing (..)
 
 import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
@@ -15,10 +16,13 @@ update : String -> WarehouseMsg.Msg -> WarehouseModel WarehouseMsg.Msg ->
     ( WarehouseModel WarehouseMsg.Msg, Cmd WarehouseMsg.Msg )
 update token message ({ form, errors, warehouse, warehouses, modalForm } as model) =
     case message of
-        OnFetchAll (Ok newWarehouses) ->
-            ( { model | warehouses = warehouses ++ newWarehouses }, Cmd.none )
+        OnFetchAll init (Ok newWarehouses) ->
+            if init then
+                ( { model | warehouses = newWarehouses }, initializeOffset () )
+            else
+                ( { model | warehouses = warehouses ++ newWarehouses }, Cmd.none )
  
-        OnFetchAll (Err error) ->
+        OnFetchAll init (Err error) ->
             ( model, Cmd.none )
 
         ShowWarehouses tok offset ->

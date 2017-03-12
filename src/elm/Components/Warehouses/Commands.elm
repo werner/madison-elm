@@ -9,7 +9,7 @@ import Components.Warehouses.Messages exposing (..)
 fetchAll : String -> Int -> Cmd Msg
 fetchAll token offset = 
     getAllRequest token offset
-        |> Http.send OnFetchAll
+        |> Http.send (OnFetchAll <| offset == 0)
 
 getAllRequest : String -> Int -> Http.Request (List Warehouse)
 getAllRequest token offset = 
