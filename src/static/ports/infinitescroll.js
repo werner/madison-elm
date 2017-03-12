@@ -36,13 +36,15 @@ require('./storage.js');
   InfiniteScroll.prototype.loadAction = function(collectionClassName, app) {
     var self = this;
     var wrapper = document.getElementsByClassName(collectionClassName)[0];
-    var lastItem = wrapper.childNodes[wrapper.childNodes.length - 1];
+    if (wrapper !== undefined) {
+      var lastItem = wrapper.childNodes[wrapper.childNodes.length - 1];
 
-    if (self.isElementInViewport(lastItem) && lastItem.dataset.isLastItem === undefined) {
-      lastItem.dataset.isLastItem = true;
-      self.partialOffSet += 1;
-      var finalOffset = self.partialOffSet * 10;
-      self.lastItem('currentUser', finalOffset, app);
+      if (self.isElementInViewport(lastItem) && lastItem.dataset.isLastItem === undefined) {
+        lastItem.dataset.isLastItem = true;
+        self.partialOffSet += 1;
+        var finalOffset = self.partialOffSet * 10;
+        self.lastItem('currentUser', finalOffset, app);
+      }
     }
   }
 

@@ -13,7 +13,9 @@
     app.ports.saveStorage.subscribe(function(args) {
       var [storageObject, isLocalStorage] = args;
       Object.keys(storageObject).forEach(function (key) {
-        self.getStorageType(isLocalStorage).setItem(key, JSON.stringify(storageObject[key]));
+        var dataObject = {};
+        dataObject[key] = storageObject[key];
+        self.getStorageType(isLocalStorage).setItem('madisonERP', JSON.stringify(dataObject));
       });
     });
   }
@@ -30,8 +32,15 @@
   };
 
   Storage.prototype.getValueFromStorage = function(storageKey) {
-    var item = sessionStorage.getItem(storageKey) || localStorage.getItem(storageKey);
-    return JSON.parse(item);
+    var data    = sessionStorage.getItem('madisonERP') || localStorage.getItem('madisonERP');
+    var rawItem = JSON.parse(data);
+    if (rawItem !== null) {
+      var item = rawItem[storageKey];
+
+      return item;
+    } else {
+      return null;
+    }
   }
 
   Storage.prototype.getStorageType = function(isLocalStorage) {
