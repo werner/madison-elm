@@ -32,7 +32,7 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
             ( model, Navigation.newUrl <| "#warehouses/" ++ (toString <| Maybe.withDefault 0 id) )
 
         DiyalogMsg diyalogMsg ->
-            let (updateModal, cmd) = Diyalog.update diyalogMsg { modalForm | headerTitle = "New Warehouse"
+            let (updateModal, cmd) = Diyalog.update diyalogMsg { modalForm | headerTitle = "Warehouse"
                                                                            , fullHeader = header model
                                                                            , body = body model
                                                                            , mainModalCss = class "modal"

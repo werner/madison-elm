@@ -61,12 +61,5 @@ warehouseRow warehouse =
        , span [ Attr.class "title", class [ WarehouseName ] ] [ strong [] [ text "Name: " ]
                                                               , text warehouse.name ]
        , a [ Attr.class "secondary-content"
-           , Attr.href "#" ] [ text "Edit" ] ]
-   
-editBtn : Warehouse -> Html WarehouseMsg.Msg
-editBtn warehouse =
-    button
-        [ Attr.class "btn regular" 
-        , onClick (ShowWarehouse warehouse.id)
-        ]
-        [ i [ Attr.class "fa fa-pencil mr1"] [], text "Edit" ]
+           , class [ RegularLink ]
+           , onClick <| DiyalogMsg DiyalgMsg.ShowingModal ] [ text "Edit" ] ]
