@@ -6,7 +6,6 @@ import Components.Warehouses.Messages as WarehouseMsg exposing (..)
 import Components.Warehouses.Models exposing (WarehouseModel, Warehouse)
 import Html.Events exposing (onClick)
 import Diyalog
-import Diyalog.Message as DiyalgMsg exposing (..)
 
 import MainCss exposing (..)
 import Components.Warehouses.Css exposing (..)
@@ -36,7 +35,7 @@ list ({ warehouses, modalForm } as model) =
                                 [ listWarehouses warehouses ]
                           , div [ Attr.class "row" ]
                                 [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                                         , onClick <| DiyalogMsg DiyalgMsg.ShowingModal ] 
+                                         , onClick NewWarehouse ] 
                                          [ i [ Attr.class "material-icons" ] 
                                              [ text "add" ]
                                          ]
@@ -62,4 +61,4 @@ warehouseRow warehouse =
                                                               , text warehouse.name ]
        , a [ Attr.class "secondary-content"
            , class [ RegularLink ]
-           , onClick <| DiyalogMsg DiyalgMsg.ShowingModal ] [ text "Edit" ] ]
+           , onClick <| EditWarehouse warehouse.id warehouse.name ] [ text "Edit" ] ]

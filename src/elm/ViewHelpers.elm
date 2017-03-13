@@ -15,17 +15,22 @@ import MainCss exposing (..)
     Html.CssHelpers.withNamespace "madison"
 
 inputForm
-    : (FieldState e String -> List a -> Html msg)
+    : (FieldState e String -> List (Attribute msg) -> Html msg)
     -> String
     -> String
     -> Form e o
+    -> String
     -> List (Html msg)
-inputForm typeField field labelField form =
+inputForm typeField field labelField form value =
     [ div [ class [ InputField ], Attr.class "input-field" ] 
-          [ typeField (Form.getFieldAsString field form) []
-          , label [] [ text labelField ]
+          [ typeField (Form.getFieldAsString field form) [ Attr.value value ]
+          , label [ Attr.class <| setActiveIfValue value ] [ text labelField ]
           , errorFor (Form.getFieldAsString field form) ]
     ]
+
+setActiveIfValue : String -> String
+setActiveIfValue value = 
+    if value == "" then "" else "active"
 
 errorFor : FieldState e String -> Html msg
 errorFor field =

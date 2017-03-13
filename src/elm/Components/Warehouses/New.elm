@@ -43,7 +43,8 @@ body ({ form, errors, warehouse, warehouses } as model) =
         div []
             [ div [ Attr.class "row" ] (showErrors errors)
             , div [ Attr.class "row" ]
-                  [ div [ Attr.class "col s10 l10" ] (inputForm Input.textInput "name" "Name" form) ]
+                  [ div [ Attr.class "col s10 l10" ] 
+                        (inputForm Input.textInput "name" "Name" form warehouse.name) ]
             ]
 
 footer : Html WarehouseMsg.Msg

@@ -8,9 +8,8 @@ import Components.Warehouses.Messages as WarehouseMsg exposing (Msg(..))
 import Components.Warehouses.Models   exposing (Warehouse, WarehouseId, WarehouseModel)
 import Components.Warehouses.Commands exposing (save, fetchAll)
 import Components.Warehouses.New exposing (view, header, body, footer)
-import Navigation
 import Diyalog
-import Diyalog.Message as DiyalogMsg exposing (..)
+import Diyalog.Message exposing (..)
 
 update : String -> WarehouseMsg.Msg -> WarehouseModel WarehouseMsg.Msg ->
     ( WarehouseModel WarehouseMsg.Msg, Cmd WarehouseMsg.Msg )
@@ -28,17 +27,27 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
         ShowWarehouses tok offset ->
             ( model, fetchAll tok offset )
 
-        ShowWarehouse id ->
-            ( model, Navigation.newUrl <| "#warehouses/" ++ (toString <| Maybe.withDefault 0 id) )
+        EditWarehouse id name ->
+            let (updateModal, cmd) =
+                Diyalog.update Diyalog.Message.ShowingModal { modalForm | headerTitle = "Edit Warehouse"
+                                                                        , body = body { model | warehouse = Warehouse id name } }
+            in
+                ( { model | modalForm = updateModal }, Cmd.none )
+
+        NewWarehouse ->
+            let (updateModal, cmd) = 
+                Diyalog.update Diyalog.Message.ShowingModal { modalForm | headerTitle = "New Warehouse"
+                                                                        , body = body model }
+            in
+                ( { model | modalForm = updateModal }, Cmd.none )
 
         DiyalogMsg diyalogMsg ->
-            let (updateModal, cmd) = Diyalog.update diyalogMsg { modalForm | headerTitle = "Warehouse"
-                                                                           , fullHeader = header model
-                                                                           , body = body model
-                                                                           , mainModalCss = class "modal"
-                                                                           , modalContentCss = class "modal-content"
-                                                                           , fullBody = view 
-                                                                           , fullFooter = footer }
+            let (updateModal, cmd) = 
+                Diyalog.update diyalogMsg { modalForm | fullHeader = header model
+                                                      , mainModalCss = class "modal"
+                                                      , modalContentCss = class "modal-content"
+                                                      , fullBody = view 
+                                                      , fullFooter = footer }
             in
                 ( { model | modalForm = updateModal }, Cmd.none )
 
@@ -48,7 +57,7 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
         FormMsg formMsg ->
             case ( formMsg, Form.getOutput form ) of
                 ( Form.Submit, Just warehouse ) ->
-                    let (updateModal, cmd) = Diyalog.update DiyalogMsg.OkModal modalForm
+                    let (updateModal, cmd) = Diyalog.update Diyalog.Message.OkModal modalForm
                     in
                     ( { model | modalForm = updateModal }, save warehouse token )
 

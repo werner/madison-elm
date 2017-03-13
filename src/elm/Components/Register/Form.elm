@@ -28,15 +28,15 @@ form ({ form, errors, user } as model) =
                                   [ div [ Attr.class "left"] [ img  [ Attr.src "static/img/logo-nav.png" ] [] ]
                                   , div [ class [ TitleNav ] ] [ div  [] [ h4 [] [ text "Register" ] ] ] ]
                             , div [ Attr.class "row" ] (showErrors errors)
-                            , div [ Attr.class "row" ] (inputForm Input.textInput "email" "Email" form)
-                            , div [ Attr.class "row" ] (inputForm Input.passwordInput "password" "Password" form)
+                            , div [ Attr.class "row" ] (inputForm Input.textInput "email" "Email" form "")
+                            , div [ Attr.class "row" ] (inputForm Input.passwordInput "password" "Password" form "")
                             , div [ Attr.class "row" ] (inputForm Input.passwordInput 
                                                                   "passwordConfirmation" 
-                                                                  "Password Confirmation" form)
-                            , div [ Attr.class "row" ] (inputForm Input.textInput "firstName" "First Name" form)
-                            , div [ Attr.class "row" ] (inputForm Input.textInput "lastName" "Last Name" form)
+                                                                  "Password Confirmation" form "")
+                            , div [ Attr.class "row" ] (inputForm Input.textInput "firstName" "First Name" form "")
+                            , div [ Attr.class "row" ] (inputForm Input.textInput "lastName" "Last Name" form "")
                             , div [ Attr.class "row" ] (inputForm Input.textInput 
-                                                                  "companyName" "Company Name" form)
+                                                                  "companyName" "Company Name" form "")
                             , div [ Attr.class "row" ]
                                   [ button [ Attr.class "btn waves-effect waves-light col s12"
                                            , onClick Form.Submit ] [ text "Register" ] ]
