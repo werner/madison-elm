@@ -56,10 +56,10 @@ update token message ({ form, errors, warehouse, warehouses, modalForm } as mode
 
         FormMsg formMsg ->
             case ( formMsg, Form.getOutput form ) of
-                ( Form.Submit, Just warehouse ) ->
+                ( Form.Submit, Just formWarehouse ) ->
                     let (updateModal, cmd) = Diyalog.update Diyalog.Message.OkModal modalForm
                     in
-                    ( { model | modalForm = updateModal }, save warehouse token )
+                    ( { model | modalForm = updateModal }, save formWarehouse token )
 
                 _ ->
                     ( { model | form = Form.update formMsg form }, Cmd.none )

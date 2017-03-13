@@ -42,6 +42,10 @@ body ({ form, errors, warehouse, warehouses } as model) =
     Html.map FormMsg <|
         div []
             [ div [ Attr.class "row" ] (showErrors errors)
+            , div [ Attr.class "hidden" ]
+                  [ input [ Attr.type_ "hidden"
+                          , Attr.value <| toString <| Maybe.withDefault 0 warehouse.id 
+                          , Attr.name "id" ] [] ]
             , div [ Attr.class "row" ]
                   [ div [ Attr.class "col s10 l10" ] 
                         (inputForm Input.textInput "name" "Name" form warehouse.name) ]

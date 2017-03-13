@@ -27,11 +27,11 @@ getAllRequest token offset =
 fetchAllUrl : Int -> String
 fetchAllUrl offset = "http://localhost:9090/warehouses?sortField=id-asc&sortField=id-asc&limit=10&offset=" ++ (toString offset)
 
-saveUrl : Int -> String
+saveUrl : Maybe Int -> String
 saveUrl warehouseId = 
     case warehouseId of 
-        0 -> "http://localhost:9090/warehouses/"
-        _ -> "http://localhost:9090/warehouses/" ++ toString warehouseId
+        Nothing -> "http://localhost:9090/warehouses/"
+        Just id -> "http://localhost:9090/warehouses/" ++ toString id
 
 collectionDecoder : Decode.Decoder (List Warehouse)
 collectionDecoder = Decode.list memberDecoder
@@ -49,11 +49,17 @@ saveRequest warehouse token =
         , expect = Http.expectStringResponse (\_ -> Ok ())
         , headers = [ Http.header "Accept" "application/json"
                     , Http.header "madison-auth" token]
-        , method = "POST"
+        , method = obtainHTTPMethod warehouse.id
         , timeout = Nothing
-        , url = saveUrl (Maybe.withDefault 0 warehouse.id)
+        , url = saveUrl warehouse.id
         , withCredentials = False
         }
+
+obtainHTTPMethod : Maybe Int -> String
+obtainHTTPMethod id =
+    case id of
+        Just x  -> "PUT"
+        Nothing -> "POST"
 
 save : Warehouse -> String -> Cmd Msg
 save warehouse token =
