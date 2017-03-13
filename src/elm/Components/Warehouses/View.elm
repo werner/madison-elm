@@ -2,7 +2,6 @@ module Components.Warehouses.View exposing (..)
 
 import Html exposing (Html)
 
-import ViewHelpers exposing (notFoundView)
 import Components.Warehouses.Models exposing ( WarehouseId, Warehouse, WarehouseModel )
 import Components.Warehouses.Messages exposing (Msg(..))
 import Components.Warehouses.List as List exposing (view)

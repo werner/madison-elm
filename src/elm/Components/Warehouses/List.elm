@@ -34,11 +34,13 @@ list ({ warehouses, modalForm } as model) =
                           , div [ Attr.class "row" ] 
                                 [ listWarehouses warehouses ]
                           , div [ Attr.class "row" ]
-                                [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
-                                         , onClick NewWarehouse ] 
-                                         [ i [ Attr.class "material-icons" ] 
-                                             [ text "add" ]
-                                         ]
+                                [ div [ Attr.class "fixed-action-btn" ]
+                                      [ button [ Attr.class "btn-floating btn-large waves-effect waves-light right"
+                                               , onClick NewWarehouse ] 
+                                               [ i [ Attr.class "material-icons" ] 
+                                                   [ text "add" ]
+                                               ]
+                                      ]
                                 ]
                           ] 
                     ]
